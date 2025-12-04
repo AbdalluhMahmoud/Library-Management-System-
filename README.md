@@ -2,7 +2,7 @@
 
 <img src="https://github.com/user-attachments/assets/ca6ed4c5-a06c-4f4f-9107-78a9b172c436" alt="Library-Management-System Logo" width="180" align="right" />
 
-**Faculty of Computing and Artificial Intelligence**  
+**Faculty of Computer Science and Artificial Intelligence**  
 **Helwan University**
 
 **Course:** Programming Languages 2 (CS-213)  
@@ -54,20 +54,14 @@ The Library Management System is designed to streamline the operations of a libr
 ---
 
 ### 📄 Documentation
-- [Project Requirements (PDF)](Requirements/ProjectRequirement)
+- [Project Requirements (Png)](LibraryManagementSystem/Requirements/ProjectRequirement)
 
-- [UML Class Diagrams](Class%20Diagrams)
-
----
-
-
-### CSV File Structures
-- `users.csv` → `username,password,fullName,email,role`
-- `bugs.csv` → `bugId,title,type,priority,level,projectName,dateReported,status,testerUsername,developerUsername,screenshotPath,dateClosed`
-
-**This division is perfectly fair** — everyone writes significant logic, deals with file I/O, and contributes to a complete working system.
+- [UML Class Diagrams](LibraryManagementSystem/Requirements/PL2ProjectCover)
 
 ---
+
+
+
 
 ### 👥 Team Members
 
@@ -75,7 +69,7 @@ The Library Management System is designed to streamline the operations of a libr
 |---------------------------|---------------------------------------------------------------------|
 | Abdullah Mahmoud          | [@Abdalluh Mahmoud](https://github.com/AbdalluhMahmoud)             |
 | Ahmed Mahmoud Youssef     | [@AboAsal](https://github.com/AboAsal)                              |
-| Habiba Hassan             | [@Habiba Hassan](https://github.com/HabibaHassan)                   |
+| Habiba Hassan             | [@Habiba Hassan](https://github.com/Habiba-Hassan)                   |
 | Jomana Emad               | [@JumanaEmad](https://github.com/JumanaEmad)                        |
 | Malak Mohamed             | [@hiclass3121991-ship-it](https://github.com/hiclass3121991-ship-it)|
 | Hannah Fahmy              | [@hannahfahmyy](https://github.com/hannahfahmyy)                    |
