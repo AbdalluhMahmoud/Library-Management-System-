@@ -1,9 +1,9 @@
-package com.mycompany.book_store;
-
+package com.mycompany.model;
 
 import java.time.LocalDate;
 
-public class Checkout {  
+public class Checkout {
+
     private String checkoutId; //Unique identifier for the checkout (borrowing)
     private Patron patron; //The user who borrowed the book
     private Book book; //The book that is borrowed
@@ -85,6 +85,5 @@ public class Checkout {
     public String toString() {
         return "Checkout{" + "checkoutId=" + checkoutId + ", patron=" + patron + ", book=" + book + ", checkoutDate=" + checkoutDate + ", dueDate=" + dueDate + ", returnDate=" + returnDate + ", status=" + status + '}';
     }
-    
 
 }

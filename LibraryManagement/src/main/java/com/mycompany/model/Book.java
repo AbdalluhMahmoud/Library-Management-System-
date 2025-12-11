@@ -1,16 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author 11
- */
-package com.mycompany.book_store;
-
+package com.mycompany.model;
 
 public class Book {
+
     private String id;
     private String author;
     private String title;
@@ -22,14 +13,14 @@ public class Book {
     public Book() {
     }
 
-    public Book(String id, String author, String title, String publisher, int publish_year, int copies_Available,String type_ofBook) {
+    public Book(String id, String author, String title, String publisher, int publish_year, int copies_Available, String type_ofBook) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.publisher = publisher;
         this.publish_year = publish_year;
         this.copies_Available = copies_Available;
-        this.type_ofBook= type_ofBook;
+        this.type_ofBook = type_ofBook;
     }
 
     public String getId() {

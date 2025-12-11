@@ -1,35 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author 11
- */
-package com.mycompany.book_store;
+package com.mycompany.model;
 
 public class User {
-   protected String id; 
-   protected String name;
-   protected String email;
-   protected String password;
+
+    protected int id;
+    protected String name;
+    protected String email;
+    protected String password;
+    protected String role;
+    protected String phoneNumber;
 
     public User() {
     }
 
-    public User(String id, String name, String email,String password) {
+    public User(int id, String name, String email, String password,String role,String phoneNumber) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password=password;
+        this.password = password;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -56,13 +52,20 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getRole() {
+        return role;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + '}';
     }
-    
 
-    
-   
 }

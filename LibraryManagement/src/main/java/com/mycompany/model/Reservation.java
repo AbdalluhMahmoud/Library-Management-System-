@@ -1,19 +1,18 @@
-package com.mycompany.book_store;
-
+package com.mycompany.model;
 
 import java.time.LocalDate;
 
 public class Reservation {
+
     private String reservation_Id; //Unique identifier for the reservation
     private Patron patron; //The user who made the reservation
     private Book book; //The book that is reserved
     private LocalDate reservation_Date; //The date when the reservation was made
     private String status; //Current status of the reservation (Active, Cancelled, Expired)
 
-   
-    public Reservation() {}
+    public Reservation() {
+    }
 
-    
     public Reservation(String reservation_Id, Patron patron, Book book, LocalDate reservation_Date, String status) {
         this.reservation_Id = reservation_Id;
         this.patron = patron;
@@ -61,11 +60,10 @@ public class Reservation {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-   
+
     @Override
     public String toString() {
         return "Reservation{" + "reservation_Id=" + reservation_Id + ", patron=" + patron + ", book=" + book + ", reservation_Date=" + reservation_Date + ", status=" + status + '}';
     }
-    
-    }
+
+}
