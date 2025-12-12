@@ -2,7 +2,7 @@ package com.mycompany.model;
 
 public class Book {
 
-    private String id;
+    private int id;
     private String author;
     private String title;
     private String publisher;
@@ -13,7 +13,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(String id, String author, String title, String publisher, int publish_year, int copies_Available, String type_ofBook) {
+    public Book(int id, String author, String title, String publisher, int publish_year, int copies_Available, String type_ofBook) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -23,11 +23,11 @@ public class Book {
         this.type_ofBook = type_ofBook;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
