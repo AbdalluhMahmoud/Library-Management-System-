@@ -9,7 +9,7 @@ public class Patron extends User {
     }
 
     public Patron( int id, String name, String email, String password,String role,String phoneNumber, String address) {
-        super(id, name, email, password,"Patron",phoneNumber);
+        super(id, name, email, password,role,phoneNumber);
         
         this.address = address;
     }

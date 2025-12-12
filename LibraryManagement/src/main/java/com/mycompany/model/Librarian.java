@@ -8,7 +8,7 @@ public class Librarian extends User {
     }
 
     public Librarian( int id, String name, String email, String password,String role,String phoneNumber,String employee_ID) {
-        super(id, name, email, password,"Librarian",phoneNumber);
+        super(id, name, email, password,role,phoneNumber);
         this.employee_ID = employee_ID;
     }
 
