@@ -17,7 +17,7 @@ public class LibraryManagement {
         System.out.println(admin.getPassword());
         
         AdminService admin2 = new AdminService();
-        Book pl2 = new Book(1,"ahmed","abbas","احمد حمص",2025,20,"history");
+        Book pl2 = new Book(1,"ahmed","abbas","sayed ",2025,20,"history");
        admin2.addBook(pl2);
        admin2.deleteBook(1);
     }

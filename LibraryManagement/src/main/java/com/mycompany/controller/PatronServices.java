@@ -1,15 +1,17 @@
+/*import com.mycompany.model.Patron;
 import java.util.ArrayList;
 import java.io.*;
 
-public class PatronManager {
-
+public class PatronServices {
+    private ArrayList<Patron> patrons;
+    
     static void addPtron(Patron Patron) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    private ArrayList<Patron> patrons;
+    
 
-    public PatronManager() {
+    public PatronServices() {
         patrons = new ArrayList<>();
     }
 
@@ -71,8 +73,8 @@ public class PatronManager {
             for (Patron p : patrons) {
                 pw.println(p.getName() + "," +
                            p.getAddress() + "," +
-                           p.getPatronId() + "," +
-                           p.getPhone() + "," +
+                           p.getId() + "," +
+                           p.getPhoneNumber() + "," +
                            p.getEmail() + "," +
                            p.getMemberShipDate() + "," +
                            p.getBorrowedBooks());
@@ -107,3 +109,4 @@ public class PatronManager {
         }
     }
 }
+*/
