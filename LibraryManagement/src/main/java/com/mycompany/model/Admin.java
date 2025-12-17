@@ -2,8 +2,8 @@ package com.mycompany.model;
 
 public class Admin extends User {
 
-    public Admin(int id, String name, String email, String password,String role,String phoneNumber) {
-        super(id, name, email, password,role,phoneNumber);
+    public Admin(int id, String role, String name, String username, String password, String email, String phone) {
+        super(id, name,username, email, password,role,phone);
     }
 
     @Override

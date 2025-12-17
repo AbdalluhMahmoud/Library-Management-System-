@@ -1,71 +1,47 @@
 package com.mycompany.model;
 
-public class User {
 
+ 
+ public class User{
     protected int id;
-    protected String name;
-    protected String email;
-    protected String password;
     protected String role;
-    protected String phoneNumber;
-
-    public User() {
-    }
-
-    public User(int id, String name, String email, String password,String role,String phoneNumber) {
+    protected String name;
+    protected String username;
+    protected String password;
+    protected String email;
+    protected String phone;
+    
+     public User(int id, String role, String name, String username, String password, String email, String phone) {
         this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
         this.role = role;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.username = username;
         this.password = password;
+        this.email = email;
+        this.phone = phone;
     }
-    public String getRole() {
-        return role;
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
+     public int getId() { return id; }
+    public String getRole() { return role; }
+    public String getName() { return name; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public String getEmail() { return email; }
+    public String getPhone() { return phone; }
+
+    public void setRole(String role) { this.role = role; }
+    public void setName(String name) { this.name = name; }
+    public void setUsername(String username) { this.username = username; }
+    public void setPassword(String password) { this.password = password; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPhone(String phone) { this.phone = phone; }
+    
+    public String toCSV() {
+        return id + "," + role + "," + name + "," + username + "," + password + "," + email + "," + phone;
     }
     
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public static User fromCSV(String line) {
+        String[] parts = line.split(",");
+        int id = Integer.parseInt(parts[0]);
+        return new User(id, parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]);
     }
-
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + '}';
-    }
-
 }

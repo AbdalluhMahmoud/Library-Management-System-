@@ -1,5 +1,8 @@
 package com.mycompany.GUI;
 
+import com.mycompany.TextFiles.UserService;
+import java.io.IOException;
+
 
 public class Register extends javax.swing.JFrame {
     
@@ -26,19 +29,19 @@ public class Register extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        regPhoneNumber = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnCreateAccount = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPasswordField3 = new javax.swing.JPasswordField();
+        regPassword = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        regUserName = new javax.swing.JTextField();
+        regEmail = new javax.swing.JTextField();
+        regName = new javax.swing.JTextField();
 
         jLabel5.setText("jLabel5");
 
@@ -68,9 +71,9 @@ public class Register extends javax.swing.JFrame {
         jLayeredPane1.add(jLabel4);
         jLabel4.setBounds(130, 380, 180, 30);
 
-        jTextField1.setColumns(20);
-        jLayeredPane1.add(jTextField1);
-        jTextField1.setBounds(390, 380, 234, 22);
+        regPhoneNumber.setColumns(20);
+        jLayeredPane1.add(regPhoneNumber);
+        regPhoneNumber.setBounds(390, 380, 234, 22);
 
         jPanel1.setBackground(new java.awt.Color(32, 136, 203));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
@@ -111,14 +114,19 @@ public class Register extends javax.swing.JFrame {
         jLayeredPane1.add(jPanel1);
         jPanel1.setBounds(0, -2, 1020, 110);
 
-        jButton1.setBackground(new java.awt.Color(51, 204, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Sign up");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        jButton1.setFocusPainted(false);
-        jLayeredPane1.add(jButton1);
-        jButton1.setBounds(370, 460, 90, 40);
+        btnCreateAccount.setBackground(new java.awt.Color(51, 204, 0));
+        btnCreateAccount.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCreateAccount.setForeground(new java.awt.Color(255, 255, 255));
+        btnCreateAccount.setText("Sign up");
+        btnCreateAccount.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btnCreateAccount.setFocusPainted(false);
+        btnCreateAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateAccountActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(btnCreateAccount);
+        btnCreateAccount.setBounds(370, 460, 90, 40);
 
         jButton2.setBackground(new java.awt.Color(220, 53, 69));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -134,9 +142,9 @@ public class Register extends javax.swing.JFrame {
         jLayeredPane1.add(jButton2);
         jButton2.setBounds(570, 460, 90, 40);
 
-        jPasswordField3.setColumns(20);
-        jLayeredPane1.add(jPasswordField3);
-        jPasswordField3.setBounds(390, 260, 234, 22);
+        regPassword.setColumns(20);
+        jLayeredPane1.add(regPassword);
+        regPassword.setBounds(390, 260, 234, 22);
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Rockwell Extra Bold", 3, 18)); // NOI18N
@@ -159,17 +167,17 @@ public class Register extends javax.swing.JFrame {
         jLayeredPane1.add(jLabel8);
         jLabel8.setBounds(130, 320, 140, 30);
 
-        jTextField2.setColumns(20);
-        jLayeredPane1.add(jTextField2);
-        jTextField2.setBounds(390, 140, 234, 22);
+        regUserName.setColumns(20);
+        jLayeredPane1.add(regUserName);
+        regUserName.setBounds(390, 140, 234, 22);
 
-        jTextField3.setColumns(20);
-        jLayeredPane1.add(jTextField3);
-        jTextField3.setBounds(390, 200, 234, 22);
+        regEmail.setColumns(20);
+        jLayeredPane1.add(regEmail);
+        regEmail.setBounds(390, 200, 234, 22);
 
-        jTextField4.setColumns(20);
-        jLayeredPane1.add(jTextField4);
-        jTextField4.setBounds(390, 320, 234, 22);
+        regName.setColumns(20);
+        jLayeredPane1.add(regName);
+        regName.setBounds(390, 320, 234, 22);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,6 +198,33 @@ public class Register extends javax.swing.JFrame {
        login.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
+        // TODO add your handling code here:
+        String name = regName.getText();
+        String userName = regUserName.getText();
+        String password = new String(regPassword.getPassword());
+        String email = regEmail.getText();
+        String phone = regPhoneNumber.getText();
+        
+        if(name.isEmpty() || userName.isEmpty() || password.isEmpty()|| email.isEmpty()){
+            javax.swing.JOptionPane.showMessageDialog(this, "please fill all fileds");
+        }
+        try{
+            UserService userService = new UserService("data/users.txt");
+            boolean success = userService.register("Patron", name, userName, password, email, phone);
+            
+            if(success){
+                javax.swing.JOptionPane.showMessageDialog(this, "Acoount Created");
+                new Login().setVisible(true);
+                this.dispose();
+            }else{
+                javax.swing.JOptionPane.showMessageDialog(this, "Username is taken");
+            }
+        }catch(IOException ex){
+            javax.swing.JOptionPane.showMessageDialog(this, "Error " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnCreateAccountActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,7 +252,7 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCreateAccount;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -229,10 +264,10 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField regEmail;
+    private javax.swing.JTextField regName;
+    private javax.swing.JPasswordField regPassword;
+    private javax.swing.JTextField regPhoneNumber;
+    private javax.swing.JTextField regUserName;
     // End of variables declaration//GEN-END:variables
 }

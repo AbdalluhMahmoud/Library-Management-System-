@@ -1,10 +1,14 @@
 package com.mycompany.GUI;
 
+import com.mycompany.TextFiles.UserService;
+import com.mycompany.model.User;
+import java.io.IOException;
+
 public class Login extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
-    /**
+    /**-
      * Creates new form Login
      */
     public Login() {
@@ -25,12 +29,12 @@ public class Login extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        loginUserName = new javax.swing.JTextField();
+        loginPassword = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -62,13 +66,13 @@ public class Login extends javax.swing.JFrame {
         jLayeredPane1.add(jLabel4);
         jLabel4.setBounds(132, 275, 140, 30);
 
-        jTextField1.setColumns(20);
-        jLayeredPane1.add(jTextField1);
-        jTextField1.setBounds(389, 177, 234, 22);
+        loginUserName.setColumns(20);
+        jLayeredPane1.add(loginUserName);
+        loginUserName.setBounds(389, 177, 234, 22);
 
-        jPasswordField1.setColumns(20);
-        jLayeredPane1.add(jPasswordField1);
-        jPasswordField1.setBounds(389, 274, 234, 22);
+        loginPassword.setColumns(20);
+        jLayeredPane1.add(loginPassword);
+        loginPassword.setBounds(389, 274, 234, 22);
 
         jPanel1.setBackground(new java.awt.Color(32, 136, 203));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
@@ -109,14 +113,19 @@ public class Login extends javax.swing.JFrame {
         jLayeredPane1.add(jPanel1);
         jPanel1.setBounds(0, -2, 1020, 110);
 
-        jButton1.setBackground(new java.awt.Color(51, 204, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Login");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        jButton1.setFocusPainted(false);
-        jLayeredPane1.add(jButton1);
-        jButton1.setBounds(330, 410, 90, 40);
+        btnLogin.setBackground(new java.awt.Color(51, 204, 0));
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setText("Login");
+        btnLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btnLogin.setFocusPainted(false);
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(btnLogin);
+        btnLogin.setBounds(330, 410, 90, 40);
 
         jButton2.setBackground(new java.awt.Color(220, 53, 69));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -160,6 +169,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -167,6 +177,41 @@ public class Login extends javax.swing.JFrame {
         reg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+                                          String username = loginUserName.getText();
+    String password = new String(loginPassword.getPassword());
+
+    try {
+        UserService userService = new UserService("data/users.txt");
+        User user = userService.login(username, password); // Returns null if failed
+
+        if (user != null) {
+            String role = user.getRole();
+            
+            // OPEN DASHBOARDS
+            if (role.equalsIgnoreCase("Admin")) {
+                new AdminDashboard().setVisible(true);
+            
+            } else if (role.equalsIgnoreCase("Librarian")) {
+                new LibrarianDashboard().setVisible(true);
+            
+            } else if (role.equalsIgnoreCase("Patron")) {
+                // IMPORTANT: Pass the 'user' object so the dashboard knows WHO is logged in
+                new PatronDashboard(user).setVisible(true); 
+            }
+            
+            this.dispose(); // Close Login Window
+            
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password");
+        }
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "System Error: " + ex.getMessage());
+    }
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,7 +239,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -204,7 +249,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField loginPassword;
+    private javax.swing.JTextField loginUserName;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,14 @@
 package com.mycompany.GUI;
 
+import com.mycompany.TextFiles.BookService;
+import com.mycompany.model.Book;
+import com.mycompany.TextFiles.UserService;
+import com.mycompany.model.User;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 public class AdminDashboard extends javax.swing.JFrame {
     
@@ -11,6 +20,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     public AdminDashboard() {
         initComponents();
         this.setLocationRelativeTo(null); 
+        loadBooksTable();
     
     // 2. Fix the Table Header Font
     tblUsers.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
@@ -39,42 +49,47 @@ public class AdminDashboard extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        bookTitle = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblBooks = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        bookAuthor = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jTextField12 = new javax.swing.JTextField();
+        bookGenre = new javax.swing.JTextField();
+        btnAddBook = new javax.swing.JButton();
+        btnUpdateBook = new javax.swing.JButton();
+        btnDeleteBook = new javax.swing.JButton();
+        bookYear = new javax.swing.JTextField();
+        btnAdminSearchBook = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        adminSearchBook = new javax.swing.JTextField();
+        adminStatus = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        userPhoneNumber = new javax.swing.JTextField();
+        btnUpdateUser = new javax.swing.JButton();
+        btnDeleteUser = new javax.swing.JButton();
+        userPassword = new javax.swing.JPasswordField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        txtUserName = new javax.swing.JTextField();
+        userEmail = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblUsers = new javax.swing.JTable();
-        jButton8 = new javax.swing.JButton();
+        btnAddUser = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        adminSearchUser = new javax.swing.JTextField();
+        btnadminSearchUser = new javax.swing.JButton();
+        adminRole = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        userName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,9 +111,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("ID:");
 
+        jTextField3.setEditable(false);
         jTextField3.setColumns(20);
 
-        jTextField5.setColumns(20);
+        bookTitle.setColumns(20);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Author:");
@@ -106,107 +122,130 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Year:");
 
-        jTextField6.setColumns(20);
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Copies:");
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblBooks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Author", "Title", "Year", "Genre", "Copies", "Publisher"
+                "ID", "Title", "Author", "Genre", "Year", "Statue"
             }
         ));
-        jTable2.setGridColor(new java.awt.Color(230, 230, 230));
-        jTable2.setRowHeight(25);
-        jTable2.setShowGrid(true);
-        jTable2.setShowHorizontalLines(true);
-        jTable2.setShowVerticalLines(true);
-        jScrollPane2.setViewportView(jTable2);
+        tblBooks.setGridColor(new java.awt.Color(230, 230, 230));
+        tblBooks.setRowHeight(25);
+        tblBooks.setShowGrid(true);
+        tblBooks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBooksMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblBooks);
+        if (tblBooks.getColumnModel().getColumnCount() > 0) {
+            tblBooks.getColumnModel().getColumn(3).setResizable(false);
+            tblBooks.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel13.setText("Title:");
 
-        jTextField9.setColumns(20);
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setText("Publisher:");
-
-        jTextField10.setColumns(20);
+        bookAuthor.setColumns(20);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setText("Genre:");
 
-        jTextField11.setColumns(20);
+        bookGenre.setColumns(20);
 
-        jButton5.setBackground(new java.awt.Color(40, 167, 69));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Add Book");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnAddBook.setBackground(new java.awt.Color(40, 167, 69));
+        btnAddBook.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddBook.setText("Add Book");
+        btnAddBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnAddBookActionPerformed(evt);
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(255, 193, 7));
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Update");
+        btnUpdateBook.setBackground(new java.awt.Color(255, 193, 7));
+        btnUpdateBook.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateBook.setText("Update");
+        btnUpdateBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateBookActionPerformed(evt);
+            }
+        });
 
-        jButton7.setBackground(new java.awt.Color(220, 53, 69));
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Delete");
+        btnDeleteBook.setBackground(new java.awt.Color(220, 53, 69));
+        btnDeleteBook.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeleteBook.setText("Delete");
+        btnDeleteBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteBookActionPerformed(evt);
+            }
+        });
+
+        btnAdminSearchBook.setBackground(new java.awt.Color(32, 136, 203));
+        btnAdminSearchBook.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdminSearchBook.setText("Search");
+        btnAdminSearchBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminSearchBookActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Search for book");
+
+        adminStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVAILABLE", "BORROWED", "RESERVED" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(100, 100, 100)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                .addComponent(jTextField12)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(bookAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGap(100, 100, 100)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(bookTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(bookYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addGap(100, 100, 100)
+                                .addComponent(bookGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(adminStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(btnUpdateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(btnDeleteBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(adminSearchBook)
+                    .addComponent(btnAdminSearchBook, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
+                .addGap(186, 186, 186))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,41 +254,39 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                .addGap(67, 67, 67)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
+                    .addComponent(bookAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bookYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(bookGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addComponent(adminStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(71, 71, 71))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(69, 69, 69)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adminSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addComponent(btnAdminSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 40, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage books", jPanel4);
@@ -263,32 +300,41 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("phoneNumber:");
 
+        jTextField1.setEditable(false);
         jTextField1.setColumns(20);
 
-        jTextField2.setColumns(20);
+        userPhoneNumber.setColumns(20);
 
-        jTextField4.setColumns(20);
-
-        jButton2.setBackground(new java.awt.Color(255, 193, 7));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Update");
-
-        jButton3.setBackground(new java.awt.Color(220, 53, 69));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Delete");
-
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateUser.setBackground(new java.awt.Color(255, 193, 7));
+        btnUpdateUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateUser.setText("Update");
+        btnUpdateUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                btnUpdateUserActionPerformed(evt);
+            }
+        });
+
+        btnDeleteUser.setBackground(new java.awt.Color(220, 53, 69));
+        btnDeleteUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeleteUser.setText("Delete");
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
+
+        userPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userPasswordActionPerformed(evt);
             }
         });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setText("Name:");
+        jLabel10.setText("UserName:");
 
-        jTextField7.setColumns(20);
+        txtUserName.setColumns(20);
 
-        jTextField8.setColumns(20);
+        userEmail.setColumns(20);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("Email:");
@@ -298,38 +344,74 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         tblUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Email", "Password", "Role", "PhoneNum"
+                "ID", "Name", "UserName", "Email", "Password", "Role", "PhoneNum"
             }
         ));
         tblUsers.setGridColor(new java.awt.Color(230, 230, 230));
         tblUsers.setRowHeight(25);
         tblUsers.setShowGrid(true);
-        tblUsers.setShowHorizontalLines(true);
-        tblUsers.setShowVerticalLines(true);
+        tblUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsersMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblUsers);
 
-        jButton8.setBackground(new java.awt.Color(40, 167, 69));
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Add User");
+        btnAddUser.setBackground(new java.awt.Color(40, 167, 69));
+        btnAddUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddUser.setText("Add User");
+        btnAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUserActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setText("Search for user");
+
+        btnadminSearchUser.setBackground(new java.awt.Color(32, 136, 203));
+        btnadminSearchUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnadminSearchUser.setText("Search");
+        btnadminSearchUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnadminSearchUserActionPerformed(evt);
+            }
+        });
+
+        adminRole.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        adminRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Librarian", "Patron" }));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setText("Name:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 627, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(adminSearchUser)
+                    .addComponent(btnadminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(165, 165, 165))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,65 +419,79 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(130, 130, 130)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addGap(114, 114, 114)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(adminRole, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(userPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(userPhoneNumber, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(userEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(46, 46, 46)
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(46, 46, 46)
+                            .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(userEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(userPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel12)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54)
+                            .addComponent(jLabel4)
+                            .addComponent(userPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
+                            .addComponent(adminRole)
+                            .addComponent(jLabel12)))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(76, 76, 76)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(73, Short.MAX_VALUE))
+                    .addComponent(adminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnadminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Manage Users", jPanel3);
@@ -440,13 +536,397 @@ public class AdminDashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void userPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_userPasswordActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBookActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+        String title = bookTitle.getText();
+        String author = bookAuthor.getText();
+        String genre = bookGenre.getText();
+        String yearText = bookYear.getText();
+        if(title.isEmpty() || author.isEmpty() || genre.isEmpty() || yearText.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+        return;
+        }
+        
+        try{
+            int year = Integer.parseInt(yearText);
+            
+            BookService bookService = new BookService("data/books.txt");
+            bookService.addBook(title, author, genre, year);
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Book Added Successfully!");
+
+        // 6. Refresh the Table so the new book shows up immediately
+            loadBooksTable(); 
+
+        // 7. Clear the forms for the next book
+            bookTitle.setText("");
+            bookAuthor.setText("");
+            bookGenre.setText("");
+            bookYear.setText("");
+        }
+        catch (NumberFormatException e) {
+        // Handles if user types "abc" instead of a year number
+        javax.swing.JOptionPane.showMessageDialog(this, "Year must be a number");
+        } 
+        catch (IOException ex) {
+        // Handles file errors
+        javax.swing.JOptionPane.showMessageDialog(this, "Error saving book: " + ex.getMessage());
+        }
+       
+    }//GEN-LAST:event_btnAddBookActionPerformed
+
+    private void btnDeleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBookActionPerformed
+        // TODO add your handling code here:
+        // 1. Check if a row is selected
+    int selectedRow = tblBooks.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        // -1 means no row is selected
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a book to delete!");
+        return;
+    }
+
+    // 2. Confirm Deletion (Good UX)
+    int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Are you sure you want to delete this book?", 
+            "Confirm Delete", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+            
+    if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+        return; // User clicked "No"
+    }
+
+    try {
+        // 3. Get the Book ID from the Table (Column 0)
+        // We cast it to String first, then Integer to be safe, or direct Integer if your model is strict
+        
+        int bookId = (int)tblBooks.getValueAt(selectedRow, 0);
+
+        // 4. Call the Service
+        BookService bookService = new BookService("data/books.txt");
+        boolean isDeleted = bookService.deleteBook(bookId);
+
+        if (isDeleted) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Book Deleted");
+            
+            // 5. Refresh the Table
+            loadBooksTable();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: Book not found.");
+        }
+
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error deleting book: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnDeleteBookActionPerformed
+
+    private void btnAdminSearchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminSearchBookActionPerformed
+        // 1. Get the keyword
+    String keyword = adminSearchBook.getText().trim(); 
+    
+    try {
+        // 2. Prepare the Table
+        // Ensure your JTable variable name matches 'tblBooks'
+        DefaultTableModel model = (DefaultTableModel) tblBooks.getModel();
+        model.setRowCount(0); // Clear existing rows
+        
+        // 3. Call the Service
+        // NOTE: Ensure "books.txt" is the same filename used in the rest of your app
+        BookService bookService = new BookService("data/books.txt");
+        List<Book> results;
+
+        // 4. Decide: Search or Show All?
+        if (keyword.isEmpty()) {
+            // Uses manager.loadBooks() internally
+            results = bookService.getAllBooks();
+        } else {
+            // Uses manager.searchBooks() internally
+            results = bookService.searchBooks(keyword);
+        }
+
+        // 5. Fill the Table
+        for (Book b : results) {
+            model.addRow(new Object[]{
+                b.getId(),
+                b.getTitle(),
+                b.getAuthor(),
+                b.getGenre(),
+                b.getYear(),
+                b.getStatus()
+            });
+        }
+        
+        // 6. User Feedback (Optional)
+        // Only show "No books found" if they actually typed a keyword and got 0 results
+        if (!keyword.isEmpty() && results.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No books found matching '" + keyword + "'");
+        }
+
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error accessing file: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnAdminSearchBookActionPerformed
+
+    private void tblBooksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBooksMouseClicked
+        // TODO add your handling code here:
+                                             
+        int selectedRow = tblBooks.getSelectedRow();
+        // NEW: Get status from Column 5 and set the dropdown
+        String status = tblBooks.getValueAt(selectedRow, 5).toString();
+        adminStatus.setSelectedItem(status);
+        // Get data from the table model
+        // Note: We skip ID (column 0) and Status (column 5) for the text fields
+        String title = tblBooks.getValueAt(selectedRow, 1).toString();
+        String author = tblBooks.getValueAt(selectedRow, 2).toString();
+        String genre = tblBooks.getValueAt(selectedRow, 3).toString();
+        String year = tblBooks.getValueAt(selectedRow, 4).toString();
+
+        // Set text fields
+        bookTitle.setText(title);
+        bookAuthor.setText(author);
+        bookGenre.setText(genre);
+        bookYear.setText(year);
+
+    }//GEN-LAST:event_tblBooksMouseClicked
+
+    private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblBooks.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a book to update!");
+        return;
+    }
+
+    try {
+        int id = (int) tblBooks.getValueAt(selectedRow, 0); 
+        
+        // 1. Get Text Fields
+        String newTitle = bookTitle.getText();
+        String newAuthor = bookAuthor.getText();
+        String newGenre = bookGenre.getText();
+        int newYear = Integer.parseInt(bookYear.getText());
+        
+        // 2. NEW: Get Status from Dropdown
+        String newStatus = adminStatus.getSelectedItem().toString();
+
+        // 3. Create Book with NEW status
+        Book updatedBook = new Book(id, newTitle, newAuthor, newGenre, newYear, newStatus);
+
+        BookService bookService = new BookService("data/books.txt");
+        boolean success = bookService.updateBook(updatedBook);
+
+        if (success) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Book & Status Updated!");
+            loadBooksTable(); 
+            
+            // Clear fields
+            bookTitle.setText("");
+            bookAuthor.setText("");
+            bookGenre.setText("");
+            bookYear.setText("");
+            adminStatus.setSelectedIndex(0); // Reset dropdown to top
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Update Failed.");
+        }
+
+    } catch (Exception ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnUpdateBookActionPerformed
+
+    private void btnadminSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnadminSearchUserActionPerformed
+        String keyword = adminSearchUser.getText().trim(); 
+    
+    try {
+        // 2. Prepare the User Table (Make sure variable name matches, e.g., tblUsers)
+        DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+        model.setRowCount(0); // Clear existing rows
+        
+        // 3. Call the Service
+        UserService userService = new UserService("data/users.txt"); // Ensure filename matches
+        List<User> results;
+
+        // 4. Decide: Search or Show All?
+        if (keyword.isEmpty()) {
+            results = userService.getAllUsers(); // Load all if empty
+        } else {
+            results = userService.searchUsers(keyword); // Filter if text exists
+        }
+
+        // 5. Fill the Table with User Data
+        for (User u : results) {
+            model.addRow(new Object[]{
+                u.getId(),
+                
+                u.getName(),
+                u.getUsername(),
+                u.getEmail(),
+                u.getPassword(),
+                u.getRole(),
+                u.getPhone()
+                // We usually don't show the Password in the table for security
+            });
+        }
+        
+        // 6. User Feedback
+        if (!keyword.isEmpty() && results.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No users found matching '" + keyword + "'");
+        }
+
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error accessing file: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnadminSearchUserActionPerformed
+
+    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
+        // TODO add your handling code here:
+        String role = adminRole.getSelectedItem().toString();
+        String name = userName.getText();
+        String username = txtUserName.getText();
+        String password = userPassword.getText(); // Using TextField for visibility in Admin view is common
+        String email = userEmail.getText();
+        String phone = userPhoneNumber.getText();
+
+        if(name.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields!");
+            return;
+        }
+
+        try {
+            UserService userService = new UserService("data/users.txt");
+            // Register handles ID generation automatically
+            boolean success = userService.register(role, name, username, password, email, phone);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "User Added Successfully!");
+                loadUsersTable(); // Refresh table
+
+                // Clear fields
+                txtUserName.setText("");
+                txtUserName.setText("");
+                userPassword.setText("");
+                userEmail.setText("");
+                userPhoneNumber.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Username already exists!");
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnAddUserActionPerformed
+
+    private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsersMouseClicked
+        // TODO add your handling code here:
+            int selectedRow = tblUsers.getSelectedRow();
+
+    // Skip ID (Col 0). Start with Role (Col 1)
+            String role = tblUsers.getValueAt(selectedRow, 1).toString();
+            String name = tblUsers.getValueAt(selectedRow, 2).toString();
+            String username = tblUsers.getValueAt(selectedRow, 3).toString();
+            String password = tblUsers.getValueAt(selectedRow, 4).toString();
+            String email = tblUsers.getValueAt(selectedRow, 5).toString();
+            String phone = tblUsers.getValueAt(selectedRow, 6).toString();
+
+            // Set Fields
+            adminRole.setSelectedItem(role);
+            txtUserName.setText(name);
+            txtUserName.setText(username);
+            userPassword.setText(password);
+            userEmail.setText(email);
+            userPhoneNumber.setText(phone);
+        
+    }//GEN-LAST:event_tblUsersMouseClicked
+
+    private void btnUpdateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUserActionPerformed
+            // TODO add your handling code here:
+            int selectedRow = tblUsers.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Select a user to update!");
+                return;
+            }
+
+        try {
+            // 1. Get ID from table (Column 0)
+            int id = (int) tblUsers.getValueAt(selectedRow, 0);
+
+            // 2. Get New Data
+            String role = adminRole.getSelectedItem().toString();
+            String name = txtUserName.getText();
+            String username = txtUserName.getText();
+            String password = userPassword.getText();
+            String email = userEmail.getText();
+            String phone = userPhoneNumber.getText();
+
+            // 3. Create Updated User Object
+            User updatedUser = new User(id, role, name, username, password, email, phone);
+
+            // 4. Call Service
+            UserService userService = new UserService("data/users.txt");
+            boolean success = userService.updateUser(updatedUser);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "User Updated!");
+                loadUsersTable();
+                // Optional: Clear fields here
+            } else {
+                JOptionPane.showMessageDialog(this, "Update Failed.");
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnUpdateUserActionPerformed
+
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblUsers.getSelectedRow();
+    
+    // 2. Check if a row is actually selected
+    if (selectedRow == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to delete.");
+        return;
+    }
+
+    // 3. Confirm Deletion (Optional but recommended)
+    int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Are you sure you want to delete this user?", 
+            "Confirm Deletion", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+            
+    if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+        return; // User clicked "No", so stop here
+    }
+
+    try {
+        // 4. Get the User ID from the table (Column 0)
+        // We cast to (Integer) because getValueAt returns an Object
+        int userId = (Integer) tblUsers.getValueAt(selectedRow, 0);
+
+        // 5. Call the Service to delete
+        UserService userService = new UserService("data/users.txt");
+        boolean deleted = userService.deleteUser(userId); //
+
+        if (deleted) {
+            javax.swing.JOptionPane.showMessageDialog(this, "User deleted successfully.");
+            
+            // 6. Remove the row from the table immediately
+            DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+            model.removeRow(selectedRow);
+            
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Could not delete user. ID not found.");
+        }
+
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error accessing file: " + ex.getMessage());
+    } catch (ClassCastException ex) {
+         javax.swing.JOptionPane.showMessageDialog(this, "Error reading ID from table. Try refreshing the table first.");
+    }
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -472,15 +952,78 @@ public class AdminDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AdminDashboard().setVisible(true));
     }
+    private void loadUsersTable() {
+    try {
+        // 1. Get the model
+        DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+        model.setRowCount(0); // Clear existing data
 
+        // 2. Load data from Service
+        UserService userService = new UserService("data/users.txt"); // Use your relative path
+        List<User> users = userService.getAllUsers();
+
+        // 3. Add rows (Order: ID, Role, Name, Username, Password, Email, Phone)
+        for (User u : users) {
+            model.addRow(new Object[]{
+                u.getId(),
+                u.getName(),
+                u.getUsername(),
+                u.getEmail(),
+                u.getPassword(),
+                u.getRole(),
+                u.getPhone() // Ensure your User class has getPhone()
+            });
+        }
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error loading users: " + ex.getMessage());
+    }
+}
+    private void loadBooksTable() {
+    try {
+        // 1. Clear existing rows
+        DefaultTableModel model = (DefaultTableModel) tblBooks.getModel();
+        model.setRowCount(0); 
+
+        // 2. Get data from Service
+        BookService bookService = new BookService("data/books.txt"); // Use your file path
+        List<Book> books = bookService.getAllBooks();
+
+        // 3. Add rows to the table
+        for (Book b : books) {
+            model.addRow(new Object[]{
+                b.getId(),
+                b.getTitle(),
+                b.getAuthor(),
+                b.getGenre(),
+                b.getYear(),
+                b.getStatus() // Available/Borrowed
+            });
+        }
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error loading books: " + ex.getMessage());
+    }
+    
+    
+    
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> adminRole;
+    private javax.swing.JTextField adminSearchBook;
+    private javax.swing.JTextField adminSearchUser;
+    private javax.swing.JComboBox<String> adminStatus;
+    private javax.swing.JTextField bookAuthor;
+    private javax.swing.JTextField bookGenre;
+    private javax.swing.JTextField bookTitle;
+    private javax.swing.JTextField bookYear;
+    private javax.swing.JButton btnAddBook;
+    private javax.swing.JButton btnAddUser;
+    private javax.swing.JButton btnAdminSearchBook;
+    private javax.swing.JButton btnDeleteBook;
+    private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnUpdateBook;
+    private javax.swing.JButton btnUpdateUser;
+    private javax.swing.JButton btnadminSearchUser;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -488,6 +1031,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -499,23 +1043,17 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTable tblBooks;
     private javax.swing.JTable tblUsers;
+    private javax.swing.JTextField txtUserName;
+    private javax.swing.JTextField userEmail;
+    private javax.swing.JTextField userName;
+    private javax.swing.JPasswordField userPassword;
+    private javax.swing.JTextField userPhoneNumber;
     // End of variables declaration//GEN-END:variables
 }
