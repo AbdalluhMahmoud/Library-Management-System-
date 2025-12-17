@@ -41,7 +41,31 @@ package com.mycompany.model;
     
     public static User fromCSV(String line) {
         String[] parts = line.split(",");
+        
+        if (parts.length < 7) return null; 
+
         int id = Integer.parseInt(parts[0]);
-        return new User(id, parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]);
+        String role = parts[1];
+        String name = parts[2];
+        String username = parts[3];
+        String password = parts[4];
+        String email = parts[5];
+        String phone = parts[6];
+
+        // 4. Decide which subclass to create based on the Role
+        if (role.equalsIgnoreCase("Admin")) {
+            return new Admin(id, role, name, username, password, email, phone);
+        } 
+        else if (role.equalsIgnoreCase("Librarian")) {
+            return new Librarian(id, role, name, username, password, email, phone);
+        } 
+        else if (role.equalsIgnoreCase("Patron")) {
+            return new Patron(id, role, name, username, password, email, phone);
+        } 
+        else {
+            // Default fallback if role is unknown (prevents crash)
+            // You might need a simple concrete implementation or throw an error
+            return new Patron(id, "Unknown", name, username, password, email, phone);
+        }
     }
 }

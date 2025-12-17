@@ -4,7 +4,7 @@ public class Patron extends User {
     
 
     public Patron( int id, String role, String name, String username, String password, String email, String phone) {
-        super(id, name,username, email, password,role,phone);
+        super(id, role, name, username, password, email, phone);
         
     }
 

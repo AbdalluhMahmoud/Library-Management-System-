@@ -1,5 +1,8 @@
 package com.mycompany.TextFiles;
 
+import com.mycompany.model.Admin;
+import com.mycompany.model.Librarian;
+import com.mycompany.model.Patron;
 import com.mycompany.model.User;
 import java.io.*;
 import java.util.*;
@@ -25,17 +28,29 @@ public class UserService {
 
     public boolean register(String role, String name, String username, String password, String email, String phone) throws IOException {
 
-        User existing = manager.findUser(username);
-        if (existing != null) {
-            return false; 
-        }
-
-        int id = generateNewId();
-        User newUser = new User(id, role, name, username, password, email, phone);
-
-        manager.addUser(newUser);
-        return true;
+    User existing = manager.findUser(username);
+    if (existing != null) {
+        return false; 
     }
+
+    int id = generateNewId();
+    User newUser;
+
+    // Create the specific subclass based on the role string
+    if (role.equalsIgnoreCase("Admin")) {
+        newUser = new Admin(id, role, name, username, password, email, phone);
+    } 
+    else if (role.equalsIgnoreCase("Librarian")) {
+        newUser = new Librarian(id, role, name, username, password, email, phone);
+    } 
+    else {
+        // Default to Patron
+        newUser = new Patron(id, role, name, username, password, email, phone);
+    }
+
+    manager.addUser(newUser);
+    return true;
+}
 
     public User login(String username, String password) throws IOException {
         return manager.login(username, password);

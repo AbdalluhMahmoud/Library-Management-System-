@@ -201,31 +201,26 @@ public class Register extends javax.swing.JFrame {
 
     private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
         // TODO add your handling code here:
-        String name = regName.getText();
-        String userName = regUserName.getText();
-        String password = new String(regPassword.getPassword());
-        String email = regEmail.getText();
-        String phone = regPhoneNumber.getText();
-        
-        if(name.isEmpty() || userName.isEmpty() || password.isEmpty()|| email.isEmpty()){
-            javax.swing.JOptionPane.showMessageDialog(this, "please fill all fileds");
-        }
-        try{
-            UserService userService = new UserService("data/users.txt");
-            boolean success = userService.register("Patron", name, userName, password, email, phone);
-            
-            if(success){
-                javax.swing.JOptionPane.showMessageDialog(this, "Acoount Created");
-                new Login().setVisible(true);
-                this.dispose();
-            }else{
-                javax.swing.JOptionPane.showMessageDialog(this, "Username is taken");
-            }
-        }catch(IOException ex){
-            javax.swing.JOptionPane.showMessageDialog(this, "Error " + ex.getMessage());
-        }
+        try {
+    UserService userService = new UserService("data/users.txt"); // Check your file path
+    String name = regName.getText();
+    String username = regUserName.getText();
+    String password = new String(regPassword.getPassword()); // Passwords need special handling
+    String email = regEmail.getText();
+    String phone = regPhoneNumber.getText();
+    boolean success = userService.register("Patron", name, username, password, email, phone);
+    
+    if(success){
+        javax.swing.JOptionPane.showMessageDialog(this, "Account Created");
+        new Login().setVisible(true);
+        this.dispose();
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Username is taken");
+    }
+} catch(IOException ex){
+    javax.swing.JOptionPane.showMessageDialog(this, "Error " + ex.getMessage());
     }//GEN-LAST:event_btnCreateAccountActionPerformed
-
+    }
     /**
      * @param args the command line arguments
      */

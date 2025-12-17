@@ -180,34 +180,42 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-                                          String username = loginUserName.getText();
+   String username = loginUserName.getText();
     String password = new String(loginPassword.getPassword());
+    
+    // DEBUG: Print what the user typed
+    System.out.println("Attempting login for: " + username);
 
     try {
-        UserService userService = new UserService("data/users.txt");
-        User user = userService.login(username, password); // Returns null if failed
+        UserService userService = new UserService("data/users.txt"); // Ensure path is correct!
+        
+        // DEBUG: Check how many users are found in the file
+        java.util.List<User> allUsers = userService.getAllUsers();
+        System.out.println("Users found in file: " + allUsers.size());
+        for(User u : allUsers) {
+             System.out.println(" - Found: " + u.getUsername() + " | Role: " + u.getRole());
+        }
+
+        User user = userService.login(username, password);
 
         if (user != null) {
-            String role = user.getRole();
+            System.out.println("LOGIN SUCCESS! Role is: " + user.getRole());
             
-            // OPEN DASHBOARDS
+            String role = user.getRole();
             if (role.equalsIgnoreCase("Admin")) {
                 new AdminDashboard().setVisible(true);
-            
             } else if (role.equalsIgnoreCase("Librarian")) {
                 new LibrarianDashboard().setVisible(true);
-            
             } else if (role.equalsIgnoreCase("Patron")) {
-                // IMPORTANT: Pass the 'user' object so the dashboard knows WHO is logged in
-                new PatronDashboard(user).setVisible(true); 
+                new PatronDashboard(user).setVisible(true);
             }
-            
-            this.dispose(); // Close Login Window
-            
+            this.dispose();
         } else {
+            System.out.println("LOGIN FAILED: User is null (No match found).");
             javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password");
         }
     } catch (IOException ex) {
+        System.out.println("ERROR: Could not read file: " + ex.getMessage());
         javax.swing.JOptionPane.showMessageDialog(this, "System Error: " + ex.getMessage());
     }
         
