@@ -55,7 +55,7 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblReservations = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        Notify = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -152,17 +152,17 @@ public class LibrarianDashboard extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtPatornID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPatornID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(issueBookID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(issueBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jLabel4)
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(returnBookID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(returnBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -200,12 +200,12 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         tblReservations.setShowGrid(true);
         jScrollPane1.setViewportView(tblReservations);
 
-        jButton4.setBackground(new java.awt.Color(255, 102, 102));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Notify Patron");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Notify.setBackground(new java.awt.Color(255, 102, 102));
+        Notify.setForeground(new java.awt.Color(255, 255, 255));
+        Notify.setText("Notify Patron");
+        Notify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                NotifyActionPerformed(evt);
             }
         });
 
@@ -216,15 +216,15 @@ public class LibrarianDashboard extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(364, 364, 364)
-                .addComponent(jButton4)
+                .addComponent(Notify)
                 .addContainerGap(405, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(Notify, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 
@@ -309,76 +309,66 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     private void btnIssueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIssueActionPerformed
         // TODO add your handling code here:
         try {
-        // 1. Get IDs from the text boxes
-        // Make sure to use the correct variable names for your text fields!
-        int userId = Integer.parseInt(txtPatornID.getText());
-        int bookId = Integer.parseInt(issueBookID.getText());
+            int userId = Integer.parseInt(txtPatornID.getText());
+            int bookId = Integer.parseInt(issueBookID.getText());
+            
+            TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
+            
+            boolean success = tService.issueBook(userId, bookId); //
 
-        // 2. Call the Service
-        // We use the 2-file constructor because issuing needs both files
-        TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
-        
-        boolean success = tService.issueBook(userId, bookId); //
-
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Book Issued Successfully!");
-            // Optional: Clear fields
-            txtPatornID.setText("");
-            issueBookID.setText("");
-        } else {
-            JOptionPane.showMessageDialog(this, "Issue Failed.\nCheck if:\n1. Book ID exists\n2. Book is 'AVAILABLE'");
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Book Issued Successfully!");
+                txtPatornID.setText("");
+                issueBookID.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Issue Failed.\nCheck if:\n1. Book ID exists\n2. Book is 'AVAILABLE'");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter valid numeric IDs.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
-        
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter valid numeric IDs.");
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-    }
     }//GEN-LAST:event_btnIssueActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void NotifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotifyActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblReservations.getSelectedRow();
     
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a reservation to notify.");
-        return;
-    }
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a reservation to notify.");
+            return;
+        }
 
-    // Get Patron Name from the table (Column 2)
-    String patronName = tblReservations.getValueAt(selectedRow, 2).toString();
-    String bookTitle = tblReservations.getValueAt(selectedRow, 1).toString();
+        String patronName = tblReservations.getValueAt(selectedRow, 2).toString();
+        String bookTitle = tblReservations.getValueAt(selectedRow, 1).toString();
 
-    // Simulate Notification
-    JOptionPane.showMessageDialog(this, 
-        "Notification sent to " + patronName + ":\n" +
-        "'The book \"" + bookTitle + "\" is now available for you!'"
-    );
-    }//GEN-LAST:event_jButton4ActionPerformed
+        JOptionPane.showMessageDialog(this, 
+            "Notification sent to " + patronName + ":\n" +
+            "'The book \"" + bookTitle + "\" is now available for you!'"
+        );
+    }//GEN-LAST:event_NotifyActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         // TODO add your handling code here:
         try {
-        // 1. Get Book ID
-        int bookId = Integer.parseInt(returnBookID.getText());
+            int bookId = Integer.parseInt(returnBookID.getText());
 
-        // 2. Call Service
-        TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
-        
-        boolean success = tService.returnBook(bookId); //
+            TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
 
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Book Returned Successfully!");
-            returnBookID.setText("");
-        } else {
-            JOptionPane.showMessageDialog(this, "Return Failed.\nThis book is not currently marked as 'BORROWED'.");
-        }
-        
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter a valid Book ID.");
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-    }
+            boolean success = tService.returnBook(bookId); //
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Book Returned Successfully!");
+                returnBookID.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Return Failed.\nThis book is not currently marked as 'BORROWED'.");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid Book ID.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+       }
         
     }//GEN-LAST:event_btnReturnActionPerformed
 
@@ -409,33 +399,27 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     private void loadReservations() {
     try {
         DefaultTableModel model = (DefaultTableModel) tblReservations.getModel();
-        model.setRowCount(0); // Clear table
+        model.setRowCount(0);
 
-        // 1. Read raw lines from reservations.txt
         List<String> lines = FileHelper.readFile("data/reservations.txt");
-        
-        // 2. Prepare Services for lookup
-        BookService bookService = new BookService("data/books.txt"); // Check your path: "data/books.txt" or "books.txt"
+
+        BookService bookService = new BookService("data/books.txt"); 
         UserService userService = new UserService("data/users.txt");
 
         for (String line : lines) {
             String[] parts = line.split(",");
             if (parts.length >= 5) {
-                // CSV Format: ResID, UserID, BookID, Date, Status
                 String resId = parts[0];
                 int userId = Integer.parseInt(parts[1]);
                 int bookId = Integer.parseInt(parts[2]);
                 String date = parts[3];
                 String status = parts[4];
 
-                // Only show ACTIVE reservations
                 if (!status.equalsIgnoreCase("ACTIVE")) continue;
 
-                // 3. Look up real names
                 String bookTitle = "Unknown Book";
                 String patronName = "Unknown User";
 
-                // Find Book
                 for(Book b : bookService.getAllBooks()) {
                     if(b.getId() == bookId) {
                         bookTitle = b.getTitle();
@@ -443,29 +427,26 @@ public class LibrarianDashboard extends javax.swing.JFrame {
                     }
                 }
                 
-                // Find User
                 for(User u : userService.getAllUsers()) {
                     if(u.getId() == userId) {
                         patronName = u.getName();
                         break;
                     }
                 }
-
-                // 4. Add to Table
                 model.addRow(new Object[]{ bookId, bookTitle, patronName, date });
             }
         }
     } catch (IOException ex) {
-        // File likely doesn't exist yet, which is fine
+        
     }
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Notify;
     private javax.swing.JButton btnIssue;
     private javax.swing.JButton btnReturn;
     private javax.swing.JTextField issueBookID;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

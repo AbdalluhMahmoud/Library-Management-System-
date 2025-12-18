@@ -72,28 +72,26 @@ public class BookFileManager {
     List<Book> allBooks = getAllBooks();
     List<Book> matches = new ArrayList<>();
     
-    String search = keyword.toLowerCase(); // Convert input to lowercase
+    String search = keyword.toLowerCase();
 
     for (Book b : allBooks) {
-        // Checks: Title OR Author OR Genre OR Year OR Status
         if (b.getTitle().toLowerCase().contains(search) || 
             b.getAuthor().toLowerCase().contains(search) ||
             b.getGenre().toLowerCase().contains(search) ||
             String.valueOf(b.getYear()).contains(search) || 
-            b.getStatus().toLowerCase().contains(search)) { // <--- ADDED STATUS HERE
+            b.getStatus().toLowerCase().contains(search)) {
             
             matches.add(b);
         }
     }
     return matches;
 }
-
   public List<Book> getAllBooks() {
         try {
             return loadBooks();
         } catch (IOException e) {
             System.err.println("Error reading book file: " + e.getMessage());
-            return new ArrayList<>(); // Return empty list on error to prevent crashes
+            return new ArrayList<>(); 
         }
     }
 }

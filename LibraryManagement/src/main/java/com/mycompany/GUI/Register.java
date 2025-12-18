@@ -73,7 +73,7 @@ public class Register extends javax.swing.JFrame {
 
         regPhoneNumber.setColumns(20);
         jLayeredPane1.add(regPhoneNumber);
-        regPhoneNumber.setBounds(390, 380, 234, 22);
+        regPhoneNumber.setBounds(390, 380, 234, 30);
 
         jPanel1.setBackground(new java.awt.Color(32, 136, 203));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
@@ -144,7 +144,7 @@ public class Register extends javax.swing.JFrame {
 
         regPassword.setColumns(20);
         jLayeredPane1.add(regPassword);
-        regPassword.setBounds(390, 260, 234, 22);
+        regPassword.setBounds(390, 260, 234, 30);
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Rockwell Extra Bold", 3, 18)); // NOI18N
@@ -169,15 +169,15 @@ public class Register extends javax.swing.JFrame {
 
         regUserName.setColumns(20);
         jLayeredPane1.add(regUserName);
-        regUserName.setBounds(390, 140, 234, 22);
+        regUserName.setBounds(390, 140, 234, 30);
 
         regEmail.setColumns(20);
         jLayeredPane1.add(regEmail);
-        regEmail.setBounds(390, 200, 234, 22);
+        regEmail.setBounds(390, 200, 234, 30);
 
         regName.setColumns(20);
         jLayeredPane1.add(regName);
-        regName.setBounds(390, 320, 234, 22);
+        regName.setBounds(390, 320, 234, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,25 +202,25 @@ public class Register extends javax.swing.JFrame {
     private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
         // TODO add your handling code here:
         try {
-    UserService userService = new UserService("data/users.txt"); // Check your file path
-    String name = regName.getText();
-    String username = regUserName.getText();
-    String password = new String(regPassword.getPassword()); // Passwords need special handling
-    String email = regEmail.getText();
-    String phone = regPhoneNumber.getText();
-    boolean success = userService.register("Patron", name, username, password, email, phone);
-    
-    if(success){
-        javax.swing.JOptionPane.showMessageDialog(this, "Account Created");
-        new Login().setVisible(true);
-        this.dispose();
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Username is taken");
-    }
-} catch(IOException ex){
+            UserService userService = new UserService("data/users.txt"); 
+            String name = regName.getText();
+            String username = regUserName.getText();
+            String password = new String(regPassword.getPassword()); 
+            String email = regEmail.getText();
+            String phone = regPhoneNumber.getText();
+            boolean success = userService.register("Patron", name, username, password, email, phone);
+
+            if(success){
+                javax.swing.JOptionPane.showMessageDialog(this, "Account Created");
+                new Login().setVisible(true);
+                this.dispose();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Username is taken");
+            }
+        }catch(IOException ex){
     javax.swing.JOptionPane.showMessageDialog(this, "Error " + ex.getMessage());
     }//GEN-LAST:event_btnCreateAccountActionPerformed
-    }
+ }
     /**
      * @param args the command line arguments
      */

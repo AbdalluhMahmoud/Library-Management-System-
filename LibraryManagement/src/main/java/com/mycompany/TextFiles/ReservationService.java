@@ -69,16 +69,12 @@ public class ReservationService {
         return updated;
     }
     public boolean reserveBook(int userId, int bookId) throws IOException {
-        // 1. Generate a simple Reservation ID (using time is easiest)
         int reservationId = (int) (System.currentTimeMillis() / 1000);
         
-        // 2. Get today's date
         LocalDate date = LocalDate.now();
         
-        // 3. Format the CSV line: ID, UserID, BookID, Date, Status
         String line = reservationId + "," + userId + "," + bookId + "," + date + ",ACTIVE";
         
-        // 4. Save to file
         FileHelper.appendLine(fileName, line);
         
         return true;

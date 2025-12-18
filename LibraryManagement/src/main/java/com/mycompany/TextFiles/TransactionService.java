@@ -23,9 +23,8 @@ public class TransactionService {
         return max + 1;
     }
     
-    // 1. GET BOOK BY ID (Uses BookService)
     public Book getBookById(int id) throws IOException {
-        List<Book> books = bookService.getAllBooks(); // CORRECTION: Use bookService
+        List<Book> books = bookService.getAllBooks();
         for (Book b : books) {
             if (b.getId() == id) {
                 return b;
@@ -34,43 +33,36 @@ public class TransactionService {
         return null; 
     }
 
-    // 2. UPDATE BOOK (Delegates to BookService)
     public void updateBook(Book updatedBook) throws IOException {
-        bookService.updateBook(updatedBook); // CORRECTION: Use bookService directly
+        bookService.updateBook(updatedBook);
     }
 
-    // 3. ISSUE BOOK
     public boolean issueBook(int userId, int bookId) throws IOException {
         Book book = getBookById(bookId);
 
-        // Check if book exists and is available
         if (book == null || !book.getStatus().equalsIgnoreCase("AVAILABLE")) {
             return false; 
         }
 
-        // Create Transaction
         int transactionId = (int) (System.currentTimeMillis() / 1000); 
         String borrowDate = java.time.LocalDate.now().toString();
         String dueDate = java.time.LocalDate.now().plusDays(14).toString(); 
 
-        // Correct Constructor: ID, UserID, BookID, BorrowDate, DueDate, ReturnDate, Status
         Transaction t = new Transaction(transactionId, userId, bookId, borrowDate, dueDate, null, "BORROWED");
         transactionManager.addTransaction(t);
 
-        // Update Book Status
         book.setStatus("BORROWED");
-        bookService.updateBook(book); // Correctly saves to books.txt
+        bookService.updateBook(book);
         
         return true;
     }
-    
-    // 4. RETURN BOOK
+
     public boolean returnBook(int bookId) throws IOException {
         List<Transaction> transactions = transactionManager.loadTransactions();
         boolean found = false;
 
         for (Transaction t : transactions) {
-            // Find the active transaction for this book
+
             if (t.getBookId() == bookId && "BORROWED".equalsIgnoreCase(t.getStatus())) {
                 
                 t.setStatus("RETURNED");
@@ -82,9 +74,8 @@ public class TransactionService {
         }
 
         if (found) {
-            transactionManager.saveTransactions(transactions); // Save transaction change
+            transactionManager.saveTransactions(transactions);
 
-            // Update Book Status back to AVAILABLE
             Book book = getBookById(bookId);
             if (book != null) {
                 book.setStatus("AVAILABLE");
@@ -126,7 +117,6 @@ public class TransactionService {
         return found;
     }
     public List<Transaction> getAllTransactions() throws IOException {
-    // This loads every single borrow record from the file
     return transactionManager.loadTransactions(); 
 }
 }

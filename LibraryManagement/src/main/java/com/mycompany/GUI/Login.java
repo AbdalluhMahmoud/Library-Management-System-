@@ -190,46 +190,42 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-                                          String username = loginUserName.getText();
-    String password = new String(loginPassword.getPassword());
+        String username = loginUserName.getText();
+        String password = new String(loginPassword.getPassword());
 
-    try {
-        UserService userService = new UserService("data/users.txt");
-        User user = userService.login(username, password); // Returns null if failed
+        try {
+            UserService userService = new UserService("data/users.txt");
+            User user = userService.login(username, password); 
 
-        if (user != null) {
-            String role = user.getRole();
-            
-            // OPEN DASHBOARDS
-            if (role.equalsIgnoreCase("Admin")) {
-                new AdminDashboard().setVisible(true);
-            
-            } else if (role.equalsIgnoreCase("Librarian")) {
-                new LibrarianDashboard().setVisible(true);
-            
-            } else if (role.equalsIgnoreCase("Patron")) {
-           // IMPORTANT: Pass the 'user' object so the dashboard knows WHO is logged in
-                new PatronDashboard(user).setVisible(true); 
+            if (user != null) {
+                String role = user.getRole();
+
+                if (role.equalsIgnoreCase("Admin")) {
+                    new AdminDashboard().setVisible(true);
+
+                } else if (role.equalsIgnoreCase("Librarian")) {
+                    new LibrarianDashboard().setVisible(true);
+
+                } else if (role.equalsIgnoreCase("Patron")) {
+                    new PatronDashboard(user).setVisible(true); 
+                }
+
+                this.dispose();
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
-            
-            this.dispose(); // Close Login Window
-            
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password");
+        } catch (IOException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "System Error: " + ex.getMessage());
         }
-    } catch (IOException ex) {
-        javax.swing.JOptionPane.showMessageDialog(this, "System Error: " + ex.getMessage());
-    }
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void chkShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPassActionPerformed
         // TODO add your handling code here:
         if (chkShowPass.isSelected()) {
-        // Show Password (set echo char to null/0)
         loginPassword.setEchoChar((char) 0); 
     } else {
-        // Hide Password (set echo char back to dots or stars)
         loginPassword.setEchoChar('*'); 
     }
     }//GEN-LAST:event_chkShowPassActionPerformed

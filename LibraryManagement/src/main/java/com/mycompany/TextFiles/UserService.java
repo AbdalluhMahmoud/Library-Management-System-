@@ -36,7 +36,6 @@ public class UserService {
     int id = generateNewId();
     User newUser;
 
-    // Create the specific subclass based on the role string
     if (role.equalsIgnoreCase("Admin")) {
         newUser = new Admin(id, role, name, username, password, email, phone);
     } 

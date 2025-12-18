@@ -28,8 +28,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     // 2. Fix the Table Header Font
     tblUsers.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
     tblUsers.getTableHeader().setOpaque(false);
-    tblUsers.getTableHeader().setBackground(new java.awt.Color(32, 136, 203)); // Blue Header
-    tblUsers.getTableHeader().setForeground(new java.awt.Color(255, 255, 255)); // White Text
+    tblUsers.getTableHeader().setBackground(new java.awt.Color(32, 136, 203));
+    tblUsers.getTableHeader().setForeground(new java.awt.Color(255, 255, 255));
     
     
     
@@ -238,7 +238,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                                 .addGap(100, 100, 100)
                                 .addComponent(bookGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(adminStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
@@ -247,13 +247,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addComponent(btnUpdateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(btnDeleteBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(adminSearchBook)
-                    .addComponent(btnAdminSearchBook, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
-                .addGap(186, 186, 186))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAdminSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adminSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(172, 172, 172))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,12 +289,12 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(adminSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(adminSearchBook, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAdminSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
         );
 
         jTabbedPane1.addTab("Manage books", jPanel4);
@@ -416,42 +416,41 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(72, 72, 72)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(adminSearchUser)
-                    .addComponent(btnadminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(165, 165, 165))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnadminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(151, 151, 151))
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104)
+                        .addComponent(adminRole, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(130, 130, 130)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                    .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(110, 110, 110)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userName)
+                            .addComponent(txtUserName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(userPassword)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(adminRole, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(userPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(userPhoneNumber, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(userEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(userPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(userEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(159, 159, 159)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,41 +464,44 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
-                            .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addComponent(userEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
+                            .addComponent(userEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(userPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(userPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(userPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(60, 60, 60)
+                            .addComponent(userPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(adminRole)
                             .addComponent(jLabel12)))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(adminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14)
+                    .addComponent(adminSearchUser, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnadminSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         jTabbedPane1.addTab("Manage Users", jPanel3);
@@ -567,21 +569,17 @@ public class AdminDashboard extends javax.swing.JFrame {
             
             javax.swing.JOptionPane.showMessageDialog(this, "Book Added Successfully!");
 
-        // 6. Refresh the Table so the new book shows up immediately
             loadBooksTable(); 
 
-        // 7. Clear the forms for the next book
             bookTitle.setText("");
             bookAuthor.setText("");
             bookGenre.setText("");
             bookYear.setText("");
         }
         catch (NumberFormatException e) {
-        // Handles if user types "abc" instead of a year number
         javax.swing.JOptionPane.showMessageDialog(this, "Year must be a number");
         } 
         catch (IOException ex) {
-        // Handles file errors
         javax.swing.JOptionPane.showMessageDialog(this, "Error saving book: " + ex.getMessage());
         }
        
@@ -589,39 +587,32 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void btnDeleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBookActionPerformed
         // TODO add your handling code here:
-        // 1. Check if a row is selected
     int selectedRow = tblBooks.getSelectedRow();
     
     if (selectedRow == -1) {
-        // -1 means no row is selected
         javax.swing.JOptionPane.showMessageDialog(this, "Please select a book to delete!");
         return;
     }
 
-    // 2. Confirm Deletion (Good UX)
     int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
             "Are you sure you want to delete this book?", 
             "Confirm Delete", 
             javax.swing.JOptionPane.YES_NO_OPTION);
             
     if (confirm != javax.swing.JOptionPane.YES_OPTION) {
-        return; // User clicked "No"
+        return; 
     }
 
     try {
-        // 3. Get the Book ID from the Table (Column 0)
-        // We cast it to String first, then Integer to be safe, or direct Integer if your model is strict
-        
+
         int bookId = (int)tblBooks.getValueAt(selectedRow, 0);
 
-        // 4. Call the Service
         BookService bookService = new BookService("data/books.txt");
         boolean isDeleted = bookService.deleteBook(bookId);
 
         if (isDeleted) {
             javax.swing.JOptionPane.showMessageDialog(this, "Book Deleted");
-            
-            // 5. Refresh the Table
+
             loadBooksTable();
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Error: Book not found.");
@@ -633,30 +624,23 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteBookActionPerformed
 
     private void btnAdminSearchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminSearchBookActionPerformed
-        // 1. Get the keyword
+
     String keyword = adminSearchBook.getText().trim(); 
     
     try {
-        // 2. Prepare the Table
-        // Ensure your JTable variable name matches 'tblBooks'
+
         DefaultTableModel model = (DefaultTableModel) tblBooks.getModel();
         model.setRowCount(0); // Clear existing rows
         
-        // 3. Call the Service
-        // NOTE: Ensure "books.txt" is the same filename used in the rest of your app
         BookService bookService = new BookService("data/books.txt");
         List<Book> results;
 
-        // 4. Decide: Search or Show All?
         if (keyword.isEmpty()) {
-            // Uses manager.loadBooks() internally
             results = bookService.getAllBooks();
         } else {
-            // Uses manager.searchBooks() internally
             results = bookService.searchBooks(keyword);
         }
 
-        // 5. Fill the Table
         for (Book b : results) {
             model.addRow(new Object[]{
                 b.getId(),
@@ -667,9 +651,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 b.getStatus()
             });
         }
-        
-        // 6. User Feedback (Optional)
-        // Only show "No books found" if they actually typed a keyword and got 0 results
+
         if (!keyword.isEmpty() && results.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "No books found matching '" + keyword + "'");
         }
@@ -683,17 +665,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
                                              
         int selectedRow = tblBooks.getSelectedRow();
-        // NEW: Get status from Column 5 and set the dropdown
         String status = tblBooks.getValueAt(selectedRow, 5).toString();
         adminStatus.setSelectedItem(status);
-        // Get data from the table model
-        // Note: We skip ID (column 0) and Status (column 5) for the text fields
         String title = tblBooks.getValueAt(selectedRow, 1).toString();
         String author = tblBooks.getValueAt(selectedRow, 2).toString();
         String genre = tblBooks.getValueAt(selectedRow, 3).toString();
         String year = tblBooks.getValueAt(selectedRow, 4).toString();
-
-        // Set text fields
+        
         bookTitle.setText(title);
         bookAuthor.setText(author);
         bookGenre.setText(genre);
@@ -712,17 +690,14 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     try {
         int id = (int) tblBooks.getValueAt(selectedRow, 0); 
-        
-        // 1. Get Text Fields
+
         String newTitle = bookTitle.getText();
         String newAuthor = bookAuthor.getText();
         String newGenre = bookGenre.getText();
         int newYear = Integer.parseInt(bookYear.getText());
-        
-        // 2. NEW: Get Status from Dropdown
+
         String newStatus = adminStatus.getSelectedItem().toString();
 
-        // 3. Create Book with NEW status
         Book updatedBook = new Book(id, newTitle, newAuthor, newGenre, newYear, newStatus);
 
         BookService bookService = new BookService("data/books.txt");
@@ -731,13 +706,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         if (success) {
             javax.swing.JOptionPane.showMessageDialog(this, "Book & Status Updated!");
             loadBooksTable(); 
-            
-            // Clear fields
+
             bookTitle.setText("");
             bookAuthor.setText("");
             bookGenre.setText("");
             bookYear.setText("");
-            adminStatus.setSelectedIndex(0); // Reset dropdown to top
+            adminStatus.setSelectedIndex(0);
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Update Failed.");
         }
@@ -751,22 +725,18 @@ public class AdminDashboard extends javax.swing.JFrame {
         String keyword = adminSearchUser.getText().trim(); 
     
     try {
-        // 2. Prepare the User Table (Make sure variable name matches, e.g., tblUsers)
         DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
-        model.setRowCount(0); // Clear existing rows
+        model.setRowCount(0);
         
-        // 3. Call the Service
-        UserService userService = new UserService("data/users.txt"); // Ensure filename matches
+        UserService userService = new UserService("data/users.txt");
         List<User> results;
 
-        // 4. Decide: Search or Show All?
         if (keyword.isEmpty()) {
-            results = userService.getAllUsers(); // Load all if empty
+            results = userService.getAllUsers();
         } else {
-            results = userService.searchUsers(keyword); // Filter if text exists
+            results = userService.searchUsers(keyword);
         }
 
-        // 5. Fill the Table with User Data
         for (User u : results) {
             model.addRow(new Object[]{
                 u.getId(),
@@ -777,11 +747,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                 u.getPassword(),
                 u.getRole(),
                 u.getPhone()
-                // We usually don't show the Password in the table for security
             });
         }
-        
-        // 6. User Feedback
+
         if (!keyword.isEmpty() && results.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "No users found matching '" + keyword + "'");
         }
@@ -796,7 +764,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         String role = adminRole.getSelectedItem().toString();
         String name = userName.getText();
         String username = txtUserName.getText();
-        String password = userPassword.getText(); // Using TextField for visibility in Admin view is common
+        String password = userPassword.getText();
         String email = userEmail.getText();
         String phone = userPhoneNumber.getText();
 
@@ -807,14 +775,12 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         try {
             UserService userService = new UserService("data/users.txt");
-            // Register handles ID generation automatically
             boolean success = userService.register(role, name, username, password, email, phone);
 
             if (success) {
                 JOptionPane.showMessageDialog(this, "User Added Successfully!");
-                loadUsersTable(); // Refresh table
+                loadUsersTable();
 
-                // Clear fields
                 txtUserName.setText("");
                 userName.setText("");
                 userPassword.setText("");
@@ -833,16 +799,15 @@ public class AdminDashboard extends javax.swing.JFrame {
             int selectedRow = tblUsers.getSelectedRow();
 
         String id = tblUsers.getValueAt(selectedRow, 0).toString(); 
-        String name = tblUsers.getValueAt(selectedRow, 1).toString();      // Name is Col 1
-        String username = tblUsers.getValueAt(selectedRow, 2).toString();  // Username is Col 2
+        String name = tblUsers.getValueAt(selectedRow, 1).toString();
+        String username = tblUsers.getValueAt(selectedRow, 2).toString();
         String email = tblUsers.getValueAt(selectedRow, 3).toString();
         String password = tblUsers.getValueAt(selectedRow, 4).toString();
-        String role = tblUsers.getValueAt(selectedRow, 5).toString();      // Role is Col 5
+        String role = tblUsers.getValueAt(selectedRow, 5).toString();
         String phone = tblUsers.getValueAt(selectedRow, 6).toString();
 
-        // 2. Set Text Fields (Make sure to use correct variable names!)
-        userName.setText(name);         // Set Name Field
-        txtUserName.setText(username);  // Set Username Field
+        userName.setText(name);        
+        txtUserName.setText(username);  
         userEmail.setText(email);
         userPassword.setText(password);
         adminRole.setSelectedItem(role);
@@ -859,7 +824,6 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
 
         try {
-            // 1. Get ID from table (Column 0)
             int id = (int) tblUsers.getValueAt(selectedRow, 0);
 
             // 2. Get New Data
@@ -870,7 +834,6 @@ public class AdminDashboard extends javax.swing.JFrame {
             String email = userEmail.getText();
             String phone = userPhoneNumber.getText();
 
-            // 3. Create Updated User Object
             User updatedUser ;
             if (role.equalsIgnoreCase("Admin")) {
             updatedUser = new Admin(id, role, name, username, password, email, phone);
@@ -880,14 +843,12 @@ public class AdminDashboard extends javax.swing.JFrame {
                 updatedUser = new Patron(id, role, name, username, password, email, phone);
             }
 
-            // 4. Call Service
             UserService userService = new UserService("data/users.txt");
             boolean success = userService.updateUser(updatedUser);
 
             if (success) {
                 JOptionPane.showMessageDialog(this, "User Updated!");
                 loadUsersTable();
-                // Optional: Clear fields here
             } else {
                 JOptionPane.showMessageDialog(this, "Update Failed.");
             }
@@ -899,36 +860,30 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblUsers.getSelectedRow();
-    
-    // 2. Check if a row is actually selected
+
     if (selectedRow == -1) {
         javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to delete.");
         return;
     }
 
-    // 3. Confirm Deletion (Optional but recommended)
     int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
             "Are you sure you want to delete this user?", 
             "Confirm Deletion", 
             javax.swing.JOptionPane.YES_NO_OPTION);
             
     if (confirm != javax.swing.JOptionPane.YES_OPTION) {
-        return; // User clicked "No", so stop here
+        return;
     }
 
     try {
-        // 4. Get the User ID from the table (Column 0)
-        // We cast to (Integer) because getValueAt returns an Object
         int userId = (Integer) tblUsers.getValueAt(selectedRow, 0);
 
-        // 5. Call the Service to delete
         UserService userService = new UserService("data/users.txt");
         boolean deleted = userService.deleteUser(userId); //
 
         if (deleted) {
             javax.swing.JOptionPane.showMessageDialog(this, "User deleted successfully.");
-            
-            // 6. Remove the row from the table immediately
+
             DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
             model.removeRow(selectedRow);
             
@@ -949,7 +904,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    /**
+    /**-
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -975,15 +930,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
     private void loadUsersTable() {
     try {
-        // 1. Get the model
         DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
-        model.setRowCount(0); // Clear existing data
+        model.setRowCount(0); 
 
-        // 2. Load data from Service
-        UserService userService = new UserService("data/users.txt"); // Use your relative path
+        UserService userService = new UserService("data/users.txt");
         List<User> users = userService.getAllUsers();
 
-        // 3. Add rows (Order: ID, Role, Name, Username, Password, Email, Phone)
         for (User u : users) {
             model.addRow(new Object[]{
                 u.getId(),
@@ -992,7 +944,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 u.getEmail(),
                 u.getPassword(),
                 u.getRole(),
-                u.getPhone() // Ensure your User class has getPhone()
+                u.getPhone() 
             });
         }
     } catch (IOException ex) {
@@ -1001,15 +953,12 @@ public class AdminDashboard extends javax.swing.JFrame {
 }
     private void loadBooksTable() {
     try {
-        // 1. Clear existing rows
         DefaultTableModel model = (DefaultTableModel) tblBooks.getModel();
         model.setRowCount(0); 
 
-        // 2. Get data from Service
-        BookService bookService = new BookService("data/books.txt"); // Use your file path
+        BookService bookService = new BookService("data/books.txt");
         List<Book> books = bookService.getAllBooks();
 
-        // 3. Add rows to the table
         for (Book b : books) {
             model.addRow(new Object[]{
                 b.getId(),
@@ -1017,7 +966,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 b.getAuthor(),
                 b.getGenre(),
                 b.getYear(),
-                b.getStatus() // Available/Borrowed
+                b.getStatus()
             });
         }
     } catch (IOException ex) {
