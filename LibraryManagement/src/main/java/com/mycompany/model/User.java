@@ -2,7 +2,7 @@ package com.mycompany.model;
 
 
  
- public class User{
+public abstract class User implements CSVConvertible{
     protected int id;
     protected String role;
     protected String name;
@@ -52,20 +52,15 @@ package com.mycompany.model;
         String email = parts[5];
         String phone = parts[6];
 
-        // 4. Decide which subclass to create based on the Role
-        if (role.equalsIgnoreCase("Admin")) {
+       if (role.equalsIgnoreCase("Admin")) {
             return new Admin(id, role, name, username, password, email, phone);
         } 
         else if (role.equalsIgnoreCase("Librarian")) {
             return new Librarian(id, role, name, username, password, email, phone);
         } 
-        else if (role.equalsIgnoreCase("Patron")) {
-            return new Patron(id, role, name, username, password, email, phone);
-        } 
         else {
-            // Default fallback if role is unknown (prevents crash)
-            // You might need a simple concrete implementation or throw an error
-            return new Patron(id, "Unknown", name, username, password, email, phone);
+            // Default to Patron for everyone else
+            return new Patron(id, role, name, username, password, email, phone);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.mycompany.model;
 
 
-public class Book {
+public class Book implements CSVConvertible{
     private int id;
     private String title;
     private String author;

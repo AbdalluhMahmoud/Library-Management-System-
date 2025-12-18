@@ -37,6 +37,7 @@ public class Login extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        chkShowPass = new javax.swing.JCheckBox();
 
         jLabel5.setText("jLabel5");
 
@@ -68,11 +69,11 @@ public class Login extends javax.swing.JFrame {
 
         loginUserName.setColumns(20);
         jLayeredPane1.add(loginUserName);
-        loginUserName.setBounds(389, 177, 234, 22);
+        loginUserName.setBounds(389, 177, 234, 30);
 
         loginPassword.setColumns(20);
         jLayeredPane1.add(loginPassword);
-        loginPassword.setBounds(389, 274, 234, 22);
+        loginPassword.setBounds(389, 274, 234, 30);
 
         jPanel1.setBackground(new java.awt.Color(32, 136, 203));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
@@ -153,6 +154,15 @@ public class Login extends javax.swing.JFrame {
         jLayeredPane1.add(jButton3);
         jButton3.setBounds(450, 410, 90, 40);
 
+        chkShowPass.setText("Show Password");
+        chkShowPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkShowPassActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(chkShowPass);
+        chkShowPass.setBounds(520, 310, 130, 20);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -213,6 +223,17 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void chkShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPassActionPerformed
+        // TODO add your handling code here:
+        if (chkShowPass.isSelected()) {
+        // Show Password (set echo char to null/0)
+        loginPassword.setEchoChar((char) 0); 
+    } else {
+        // Hide Password (set echo char back to dots or stars)
+        loginPassword.setEchoChar('*'); 
+    }
+    }//GEN-LAST:event_chkShowPassActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -240,6 +261,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JCheckBox chkShowPass;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

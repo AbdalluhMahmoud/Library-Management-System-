@@ -2,7 +2,7 @@ package com.mycompany.model;
 
 
 
-public class Reservation {
+public class Reservation implements CSVConvertible{
     private int id;
     private int userId;
     private int bookId;

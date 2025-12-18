@@ -3,6 +3,9 @@ package com.mycompany.GUI;
 import com.mycompany.TextFiles.BookService;
 import com.mycompany.model.Book;
 import com.mycompany.TextFiles.UserService;
+import com.mycompany.model.Admin;
+import com.mycompany.model.Librarian;
+import com.mycompany.model.Patron;
 import com.mycompany.model.User;
 import java.io.IOException;
 import java.util.List;
@@ -813,7 +816,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
                 // Clear fields
                 txtUserName.setText("");
-                txtUserName.setText("");
+                userName.setText("");
                 userPassword.setText("");
                 userEmail.setText("");
                 userPhoneNumber.setText("");
@@ -829,21 +832,21 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
             int selectedRow = tblUsers.getSelectedRow();
 
-    // Skip ID (Col 0). Start with Role (Col 1)
-            String role = tblUsers.getValueAt(selectedRow, 1).toString();
-            String name = tblUsers.getValueAt(selectedRow, 2).toString();
-            String username = tblUsers.getValueAt(selectedRow, 3).toString();
-            String password = tblUsers.getValueAt(selectedRow, 4).toString();
-            String email = tblUsers.getValueAt(selectedRow, 5).toString();
-            String phone = tblUsers.getValueAt(selectedRow, 6).toString();
+        String id = tblUsers.getValueAt(selectedRow, 0).toString(); 
+        String name = tblUsers.getValueAt(selectedRow, 1).toString();      // Name is Col 1
+        String username = tblUsers.getValueAt(selectedRow, 2).toString();  // Username is Col 2
+        String email = tblUsers.getValueAt(selectedRow, 3).toString();
+        String password = tblUsers.getValueAt(selectedRow, 4).toString();
+        String role = tblUsers.getValueAt(selectedRow, 5).toString();      // Role is Col 5
+        String phone = tblUsers.getValueAt(selectedRow, 6).toString();
 
-            // Set Fields
-            adminRole.setSelectedItem(role);
-            txtUserName.setText(name);
-            txtUserName.setText(username);
-            userPassword.setText(password);
-            userEmail.setText(email);
-            userPhoneNumber.setText(phone);
+        // 2. Set Text Fields (Make sure to use correct variable names!)
+        userName.setText(name);         // Set Name Field
+        txtUserName.setText(username);  // Set Username Field
+        userEmail.setText(email);
+        userPassword.setText(password);
+        adminRole.setSelectedItem(role);
+        userPhoneNumber.setText(phone);
         
     }//GEN-LAST:event_tblUsersMouseClicked
 
@@ -861,14 +864,21 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             // 2. Get New Data
             String role = adminRole.getSelectedItem().toString();
-            String name = txtUserName.getText();
+            String name = userName.getText();
             String username = txtUserName.getText();
             String password = userPassword.getText();
             String email = userEmail.getText();
             String phone = userPhoneNumber.getText();
 
             // 3. Create Updated User Object
-            User updatedUser = new User(id, role, name, username, password, email, phone);
+            User updatedUser ;
+            if (role.equalsIgnoreCase("Admin")) {
+            updatedUser = new Admin(id, role, name, username, password, email, phone);
+            } else if (role.equalsIgnoreCase("Librarian")) {
+                updatedUser = new Librarian(id, role, name, username, password, email, phone);
+            } else {
+                updatedUser = new Patron(id, role, name, username, password, email, phone);
+            }
 
             // 4. Call Service
             UserService userService = new UserService("data/users.txt");

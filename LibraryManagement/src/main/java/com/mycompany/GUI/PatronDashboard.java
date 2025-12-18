@@ -73,6 +73,7 @@ public class PatronDashboard extends javax.swing.JFrame {
         tblCatalog = new javax.swing.JTable();
         btnSearchPatron = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        patornRequest = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -87,7 +88,6 @@ public class PatronDashboard extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMyBooks = new javax.swing.JTable();
         patornRenew = new javax.swing.JButton();
-        patornRequest = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
@@ -134,20 +134,35 @@ public class PatronDashboard extends javax.swing.JFrame {
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Title", "Author", "Genre." }));
 
+        patornRequest.setBackground(new java.awt.Color(32, 136, 203));
+        patornRequest.setForeground(new java.awt.Color(255, 255, 255));
+        patornRequest.setText("Request Reservation");
+        patornRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patornRequestActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSearchPatron, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSearchPatron, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                            .addComponent(jTextField1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(patornRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -161,7 +176,9 @@ public class PatronDashboard extends javax.swing.JFrame {
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(80, 80, 80)
-                        .addComponent(btnSearchPatron))
+                        .addComponent(btnSearchPatron)
+                        .addGap(65, 65, 65)
+                        .addComponent(patornRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -258,13 +275,13 @@ public class PatronDashboard extends javax.swing.JFrame {
         tblMyBooks.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         tblMyBooks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Book Title", "Borrow Date", "Due Date", "Status"
+                "Transaction ID", "Book Title", "Author", "Borrow Date", "Due Date", "Status"
             }
         ));
         tblMyBooks.setGridColor(new java.awt.Color(230, 230, 230));
@@ -281,15 +298,6 @@ public class PatronDashboard extends javax.swing.JFrame {
             }
         });
 
-        patornRequest.setBackground(new java.awt.Color(32, 136, 203));
-        patornRequest.setForeground(new java.awt.Color(255, 255, 255));
-        patornRequest.setText("Request Reservation");
-        patornRequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                patornRequestActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -298,19 +306,15 @@ public class PatronDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(159, 159, 159)
                 .addComponent(patornRenew, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
-                .addComponent(patornRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(218, 218, 218))
+                .addGap(218, 501, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(patornRenew, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(patornRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 58, Short.MAX_VALUE))
+                .addGap(51, 51, 51)
+                .addComponent(patornRenew, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 60, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("My Books", jPanel2);
@@ -460,7 +464,7 @@ public class PatronDashboard extends javax.swing.JFrame {
             );
 
             // 3. Call Service to Save
-            UserService userService = new UserService("users.txt"); // Ensure filename matches
+            UserService userService = new UserService("data/users.txt"); // Ensure filename matches
             boolean success = userService.updateUser(updatedPatron); //
 
             if (success) {
@@ -478,45 +482,6 @@ public class PatronDashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error updating profile: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnUpdateInfoActionPerformed
-
-    private void patornRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patornRequestActionPerformed
-        // TODO add your handling code here:
-        // 1. Get the selected row from the CATALOG table (where all books are)
-    // (We assume the user selects a book they want from the main list)
-    int selectedRow = tblCatalog.getSelectedRow();
-    
-    if (selectedRow == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Please go to 'Search Books' tab and select a book first.");
-        return;
-    }
-
-    // 2. Get Book Info from the table
-    // Column 0 is ID, Column 4 is Status (Available/Borrowed)
-    int bookId = Integer.parseInt(tblCatalog.getValueAt(selectedRow, 0).toString());
-    String status = tblCatalog.getValueAt(selectedRow, 4).toString();
-
-    // 3. Check if it is valid to reserve
-    if (status.equalsIgnoreCase("AVAILABLE")) {
-        javax.swing.JOptionPane.showMessageDialog(this, "This book is available! You don't need to reserve it. Just borrow it.");
-        return;
-    }
-
-    // 4. Call the Service to Reserve
-    try {
-        ReservationService rService = new ReservationService("data/reservations.txt");
-        
-        boolean success = rService.reserveBook(currentUser.getId(), bookId);
-        
-        if (success) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Reservation placed successfully!");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Could not place reservation.");
-        }
-        
-    } catch (java.io.IOException ex) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-    }
-    }//GEN-LAST:event_patornRequestActionPerformed
 
     private void patornRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patornRenewActionPerformed
         // TODO add your handling code here:
@@ -546,6 +511,40 @@ public class PatronDashboard extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
     }
     }//GEN-LAST:event_patornRenewActionPerformed
+
+    private void patornRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patornRequestActionPerformed
+        try {
+        // 1. Check Catalog Table Selection
+        int selectedRow = tblCatalog.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a book from the table to reserve.");
+            return;
+        }
+
+        String idStr = tblCatalog.getValueAt(selectedRow, 0).toString();
+        int bookId = Integer.parseInt(idStr);
+        String status = tblCatalog.getValueAt(selectedRow, 4).toString();
+
+        if (status.equalsIgnoreCase("AVAILABLE")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "This book is available! Just borrow it.");
+            return;
+        }
+
+        ReservationService rService = new ReservationService("data/reservations.txt");
+        
+        boolean success = rService.reserveBook(currentUser.getId(), bookId); 
+        
+        if (success) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Reservation placed successfully!");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Could not place reservation.");
+        }
+
+        } catch (Exception ex) {
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Critical Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_patornRequestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -619,7 +618,7 @@ private void loadMyBooks() {
         // 2. Prepare Services
         // TransactionService needs BOTH filenames because it talks to both files
         TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
-        BookService bService = new BookService("books.txt");
+        BookService bService = new BookService("data/books.txt");
 
         // 3. Get Data
         List<Transaction> myTransactions = tService.getUserTransactions(currentUser.getId()); //

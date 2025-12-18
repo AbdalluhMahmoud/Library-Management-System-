@@ -2,7 +2,7 @@ package com.mycompany.model;
 
 
 
-public class Transaction {
+public class Transaction implements CSVConvertible{
     private int transactionId;
     private int userId;
     private int bookId;

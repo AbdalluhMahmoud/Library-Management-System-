@@ -6,6 +6,7 @@ com\mycompany\GUI\Register$1.class
 com\mycompany\TextFiles\UserFileManager.class
 com\mycompany\model\User.class
 com\mycompany\GUI\PatronDashboard$2.class
+com\mycompany\model\CSVConvertible.class
 com\mycompany\GUI\AdminDashboard$5.class
 com\mycompany\GUI\LibrarianDashboard$4.class
 com\mycompany\GUI\AdminDashboard$2.class
@@ -19,6 +20,7 @@ com\mycompany\GUI\LibrarianDashboard$2.class
 com\mycompany\GUI\PatronDashboard$5.class
 com\mycompany\GUI\LibrarianDashboard$5.class
 com\mycompany\TextFiles\ReservationFileManager.class
+com\mycompany\GUI\Login$4.class
 com\mycompany\TextFiles\UserService.class
 com\mycompany\GUI\AdminDashboard$10.class
 com\mycompany\TextFiles\FileHelper.class

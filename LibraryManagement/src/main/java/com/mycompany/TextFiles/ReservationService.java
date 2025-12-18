@@ -12,6 +12,7 @@ public class ReservationService {
     
     public ReservationService(String fileName) {
         this.manager = new ReservationFileManager(fileName);
+        this.fileName=fileName;
     }
 
     private int generateNewId() throws IOException {
