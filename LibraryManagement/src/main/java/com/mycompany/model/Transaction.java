@@ -26,6 +26,7 @@ public class Transaction {
     public int getBookId(){return bookId;}
     public String getBorrowDate(){return borrowDate;}
     public String getDueDate(){return dueDate;}
+    public void setDueDate(String dueDate) {this.dueDate = dueDate;}
     public String getReturnDate(){return returnDate;}
     public String getStatus(){return status;}
     

@@ -1,5 +1,16 @@
 package com.mycompany.GUI;
 
+import com.mycompany.TextFiles.BookService;
+import com.mycompany.TextFiles.FileHelper;
+import com.mycompany.TextFiles.TransactionService;
+import com.mycompany.TextFiles.UserService;
+import com.mycompany.model.Book;
+import com.mycompany.model.User;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class LibrarianDashboard extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LibrarianDashboard.class.getName());
@@ -14,6 +25,7 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         tblReservations.getTableHeader().setOpaque(false);
         tblReservations.getTableHeader().setBackground(new java.awt.Color(32, 136, 203)); 
         tblReservations.getTableHeader().setForeground(new java.awt.Color(255, 255, 255)); 
+        loadReservations();
     }
 
     /**
@@ -32,14 +44,14 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtPatornID = new javax.swing.JTextField();
+        issueBookID = new javax.swing.JTextField();
+        btnIssue = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        returnBookID = new javax.swing.JTextField();
+        btnReturn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblReservations = new javax.swing.JTable();
@@ -61,10 +73,15 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Book ID:");
 
-        jButton1.setBackground(new java.awt.Color(0, 86, 179));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Issue Book");
+        btnIssue.setBackground(new java.awt.Color(0, 86, 179));
+        btnIssue.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnIssue.setForeground(new java.awt.Color(255, 255, 255));
+        btnIssue.setText("Issue Book");
+        btnIssue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIssueActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setBackground(new java.awt.Color(102, 102, 102));
         jSeparator1.setOpaque(true);
@@ -75,10 +92,15 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Book ID:");
 
-        jButton2.setBackground(new java.awt.Color(0, 86, 179));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Return Book");
+        btnReturn.setBackground(new java.awt.Color(0, 86, 179));
+        btnReturn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnReturn.setForeground(new java.awt.Color(255, 255, 255));
+        btnReturn.setText("Return Book");
+        btnReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,11 +118,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(61, 61, 61)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtPatornID, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(issueBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)
+                        .addComponent(btnIssue)
                         .addGap(11, 11, 11)))
                 .addGap(153, 153, 153)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -109,12 +131,12 @@ public class LibrarianDashboard extends javax.swing.JFrame {
                         .addGap(146, 146, 146)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)))
+                            .addComponent(btnReturn)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(returnBookID, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(185, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -130,25 +152,25 @@ public class LibrarianDashboard extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPatornID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(issueBookID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jLabel4)
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(returnBookID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnIssue, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(174, Short.MAX_VALUE))
         );
 
@@ -181,6 +203,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(255, 102, 102));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Notify Patron");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -208,6 +235,11 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(0, 86, 179));
         jButton3.setText("LogOut");
         jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -268,6 +300,88 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnIssueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIssueActionPerformed
+        // TODO add your handling code here:
+        try {
+        // 1. Get IDs from the text boxes
+        // Make sure to use the correct variable names for your text fields!
+        int userId = Integer.parseInt(txtPatornID.getText());
+        int bookId = Integer.parseInt(issueBookID.getText());
+
+        // 2. Call the Service
+        // We use the 2-file constructor because issuing needs both files
+        TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
+        
+        boolean success = tService.issueBook(userId, bookId); //
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Book Issued Successfully!");
+            // Optional: Clear fields
+            txtPatornID.setText("");
+            issueBookID.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Issue Failed.\nCheck if:\n1. Book ID exists\n2. Book is 'AVAILABLE'");
+        }
+        
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Please enter valid numeric IDs.");
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnIssueActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblReservations.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a reservation to notify.");
+        return;
+    }
+
+    // Get Patron Name from the table (Column 2)
+    String patronName = tblReservations.getValueAt(selectedRow, 2).toString();
+    String bookTitle = tblReservations.getValueAt(selectedRow, 1).toString();
+
+    // Simulate Notification
+    JOptionPane.showMessageDialog(this, 
+        "Notification sent to " + patronName + ":\n" +
+        "'The book \"" + bookTitle + "\" is now available for you!'"
+    );
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
+        // TODO add your handling code here:
+        try {
+        // 1. Get Book ID
+        int bookId = Integer.parseInt(returnBookID.getText());
+
+        // 2. Call Service
+        TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
+        
+        boolean success = tService.returnBook(bookId); //
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Book Returned Successfully!");
+            returnBookID.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Return Failed.\nThis book is not currently marked as 'BORROWED'.");
+        }
+        
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid Book ID.");
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+    }
+        
+    }//GEN-LAST:event_btnReturnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,10 +406,64 @@ public class LibrarianDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new LibrarianDashboard().setVisible(true));
     }
+    private void loadReservations() {
+    try {
+        DefaultTableModel model = (DefaultTableModel) tblReservations.getModel();
+        model.setRowCount(0); // Clear table
+
+        // 1. Read raw lines from reservations.txt
+        List<String> lines = FileHelper.readFile("data/reservations.txt");
+        
+        // 2. Prepare Services for lookup
+        BookService bookService = new BookService("data/books.txt"); // Check your path: "data/books.txt" or "books.txt"
+        UserService userService = new UserService("data/users.txt");
+
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length >= 5) {
+                // CSV Format: ResID, UserID, BookID, Date, Status
+                String resId = parts[0];
+                int userId = Integer.parseInt(parts[1]);
+                int bookId = Integer.parseInt(parts[2]);
+                String date = parts[3];
+                String status = parts[4];
+
+                // Only show ACTIVE reservations
+                if (!status.equalsIgnoreCase("ACTIVE")) continue;
+
+                // 3. Look up real names
+                String bookTitle = "Unknown Book";
+                String patronName = "Unknown User";
+
+                // Find Book
+                for(Book b : bookService.getAllBooks()) {
+                    if(b.getId() == bookId) {
+                        bookTitle = b.getTitle();
+                        break;
+                    }
+                }
+                
+                // Find User
+                for(User u : userService.getAllUsers()) {
+                    if(u.getId() == userId) {
+                        patronName = u.getName();
+                        break;
+                    }
+                }
+
+                // 4. Add to Table
+                model.addRow(new Object[]{ bookId, bookTitle, patronName, date });
+            }
+        }
+    } catch (IOException ex) {
+        // File likely doesn't exist yet, which is fine
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnIssue;
+    private javax.swing.JButton btnReturn;
+    private javax.swing.JTextField issueBookID;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -312,9 +480,8 @@ public class LibrarianDashboard extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField returnBookID;
     private javax.swing.JTable tblReservations;
+    private javax.swing.JTextField txtPatornID;
     // End of variables declaration//GEN-END:variables
 }

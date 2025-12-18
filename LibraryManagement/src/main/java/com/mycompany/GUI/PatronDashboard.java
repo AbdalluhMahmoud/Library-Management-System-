@@ -1,6 +1,17 @@
 package com.mycompany.GUI;
 
+import com.mycompany.TextFiles.BookService;
+import com.mycompany.TextFiles.ReservationService;
+import com.mycompany.TextFiles.TransactionService;
+import com.mycompany.TextFiles.UserService;
+import com.mycompany.model.Book;
+import com.mycompany.model.Patron;
+import com.mycompany.model.Transaction;
 import com.mycompany.model.User;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class PatronDashboard extends javax.swing.JFrame {
     
@@ -12,13 +23,17 @@ public class PatronDashboard extends javax.swing.JFrame {
     // 1. Add this field to store the logged-in user
     private User currentUser; 
 
-    // 2. Change the Constructor to accept a User
+    
     public PatronDashboard(User user) {
         initComponents();
-        this.currentUser = user; // Save the user
-        
-        // Optional: Show their name in the welcome label
+        this.currentUser = user; 
         lblWelcome.setText("Welcome, " + user.getName());
+    
+  
+        loadCatalog();
+        loadProfileData();
+        loadMyBooks();
+ 
     }
 
     // Keep the empty constructor ONLY if you need to preview the design, 
@@ -56,23 +71,23 @@ public class PatronDashboard extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCatalog = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnSearchPatron = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton4 = new javax.swing.JButton();
+        IDPatron = new javax.swing.JTextField();
+        PatornName = new javax.swing.JTextField();
+        patornEmail = new javax.swing.JTextField();
+        patornPass = new javax.swing.JPasswordField();
+        btnUpdateInfo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMyBooks = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        patornRenew = new javax.swing.JButton();
+        patornRequest = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
@@ -107,9 +122,14 @@ public class PatronDashboard extends javax.swing.JFrame {
         tblCatalog.setShowGrid(true);
         jScrollPane1.setViewportView(tblCatalog);
 
-        jButton1.setBackground(new java.awt.Color(32, 136, 203));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Search");
+        btnSearchPatron.setBackground(new java.awt.Color(32, 136, 203));
+        btnSearchPatron.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchPatron.setText("Search");
+        btnSearchPatron.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPatronActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Title", "Author", "Genre." }));
@@ -123,7 +143,7 @@ public class PatronDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                    .addComponent(btnSearchPatron, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                     .addComponent(jTextField1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,7 +161,7 @@ public class PatronDashboard extends javax.swing.JFrame {
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(80, 80, 80)
-                        .addComponent(jButton1))
+                        .addComponent(btnSearchPatron))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -162,19 +182,24 @@ public class PatronDashboard extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Password:");
 
-        jTextField2.setEditable(false);
-        jTextField2.setColumns(20);
+        IDPatron.setEditable(false);
+        IDPatron.setColumns(20);
 
-        jTextField3.setColumns(20);
+        PatornName.setColumns(20);
 
-        jTextField4.setColumns(20);
+        patornEmail.setColumns(20);
 
-        jPasswordField1.setColumns(20);
+        patornPass.setColumns(20);
 
-        jButton4.setBackground(new java.awt.Color(255, 193, 7));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Update info");
+        btnUpdateInfo.setBackground(new java.awt.Color(255, 193, 7));
+        btnUpdateInfo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnUpdateInfo.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateInfo.setText("Update info");
+        btnUpdateInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateInfoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -196,11 +221,11 @@ public class PatronDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel5)))
                 .addGap(127, 127, 127)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addComponent(btnUpdateInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(patornEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(PatornName, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(IDPatron, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(patornPass, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                 .addContainerGap(445, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -211,20 +236,20 @@ public class PatronDashboard extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(IDPatron, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(68, 68, 68)
                         .addComponent(jLabel3))
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PatornName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(patornEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(patornPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUpdateInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
         );
 
@@ -247,13 +272,23 @@ public class PatronDashboard extends javax.swing.JFrame {
         tblMyBooks.setShowGrid(true);
         jScrollPane2.setViewportView(tblMyBooks);
 
-        jButton2.setBackground(new java.awt.Color(255, 193, 7));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Renew Selected");
+        patornRenew.setBackground(new java.awt.Color(255, 193, 7));
+        patornRenew.setForeground(new java.awt.Color(255, 255, 255));
+        patornRenew.setText("Renew Selected");
+        patornRenew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patornRenewActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(32, 136, 203));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Request Reservation");
+        patornRequest.setBackground(new java.awt.Color(32, 136, 203));
+        patornRequest.setForeground(new java.awt.Color(255, 255, 255));
+        patornRequest.setText("Request Reservation");
+        patornRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patornRequestActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -262,9 +297,9 @@ public class PatronDashboard extends javax.swing.JFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(159, 159, 159)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(patornRenew, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(patornRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(218, 218, 218))
         );
         jPanel2Layout.setVerticalGroup(
@@ -273,8 +308,8 @@ public class PatronDashboard extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(patornRenew, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(patornRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 58, Short.MAX_VALUE))
         );
 
@@ -289,6 +324,11 @@ public class PatronDashboard extends javax.swing.JFrame {
         jButton5.setForeground(new java.awt.Color(0, 86, 179));
         jButton5.setText("Logout");
         jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         lblWelcome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblWelcome.setText("Welcome");
@@ -345,6 +385,168 @@ public class PatronDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void btnSearchPatronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPatronActionPerformed
+        // TODO add your handling code here:
+        String keyword = jTextField1.getText().trim();
+    
+    try {
+        DefaultTableModel model = (DefaultTableModel) tblCatalog.getModel();
+        model.setRowCount(0); // Clear current results
+        
+        BookService bookService = new BookService("data/books.txt");
+        List<Book> results;
+
+        // 1. Decide: Search or Show All?
+        if (keyword.isEmpty()) {
+            results = bookService.getAllBooks();
+        } else {
+            // Searches Title, Author, Genre, Year, Status
+            results = bookService.searchBooks(keyword); //
+        }
+
+        // 2. Show feedback if nothing found
+        if (results.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No books found matching: " + keyword);
+        }
+
+        // 3. Fill Table
+        for (Book b : results) {
+            model.addRow(new Object[]{
+                b.getId(),
+                b.getTitle(),
+                b.getAuthor(),
+                b.getGenre(),
+                b.getStatus()
+            });
+        }
+
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error searching books: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnSearchPatronActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void btnUpdateInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateInfoActionPerformed
+        // TODO add your handling code here:
+        // 1. Get the new data from the text fields
+        String newName = PatornName.getText();
+        String newEmail = patornEmail.getText();
+        String newPass = new String(patornPass.getPassword());
+
+        // Validation
+        if(newName.isEmpty() || newEmail.isEmpty() || newPass.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Fields cannot be empty.");
+            return;
+        }
+
+        try {
+            // 2. Prepare the Updated User Object
+            // We must preserve the fields that are NOT on the screen (Role, Username, Phone)
+            // by getting them from 'currentUser'.
+
+            Patron updatedPatron = new Patron(
+                currentUser.getId(),       // Keep same ID
+                currentUser.getRole(),     // Keep same Role ("Patron")
+                newName,                   // NEW Name
+                currentUser.getUsername(), // Keep same Username
+                newPass,                   // NEW Password
+                newEmail,                  // NEW Email
+                currentUser.getPhone()     // Keep same Phone
+            );
+
+            // 3. Call Service to Save
+            UserService userService = new UserService("users.txt"); // Ensure filename matches
+            boolean success = userService.updateUser(updatedPatron); //
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Profile Updated Successfully!");
+
+                // 4. Update the 'currentUser' variable in memory so the app knows the new info immediately
+                this.currentUser = updatedPatron;
+                lblWelcome.setText("Welcome, " + newName); // Update welcome label
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Update Failed. User not found.");
+            }
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error updating profile: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnUpdateInfoActionPerformed
+
+    private void patornRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patornRequestActionPerformed
+        // TODO add your handling code here:
+        // 1. Get the selected row from the CATALOG table (where all books are)
+    // (We assume the user selects a book they want from the main list)
+    int selectedRow = tblCatalog.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please go to 'Search Books' tab and select a book first.");
+        return;
+    }
+
+    // 2. Get Book Info from the table
+    // Column 0 is ID, Column 4 is Status (Available/Borrowed)
+    int bookId = Integer.parseInt(tblCatalog.getValueAt(selectedRow, 0).toString());
+    String status = tblCatalog.getValueAt(selectedRow, 4).toString();
+
+    // 3. Check if it is valid to reserve
+    if (status.equalsIgnoreCase("AVAILABLE")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "This book is available! You don't need to reserve it. Just borrow it.");
+        return;
+    }
+
+    // 4. Call the Service to Reserve
+    try {
+        ReservationService rService = new ReservationService("data/reservations.txt");
+        
+        boolean success = rService.reserveBook(currentUser.getId(), bookId);
+        
+        if (success) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Reservation placed successfully!");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Could not place reservation.");
+        }
+        
+    } catch (java.io.IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_patornRequestActionPerformed
+
+    private void patornRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patornRenewActionPerformed
+        // TODO add your handling code here:
+        // 1. Get Selected Row
+    int selectedRow = tblMyBooks.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a book to renew.");
+        return;
+    }
+
+    // 2. Get Transaction ID (Column 0)
+    int transactionId = (int) tblMyBooks.getValueAt(selectedRow, 0);
+
+    // 3. Call Service
+    try {
+        TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
+        boolean success = tService.renewBook(transactionId);
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Book Renewed for 7 days!");
+            loadMyBooks(); // Refresh table to see new date
+        } else {
+            JOptionPane.showMessageDialog(this, "Could not renew. Check if returned.");
+        }
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_patornRenewActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -369,12 +571,95 @@ public class PatronDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new PatronDashboard().setVisible(true));
     }
+    private void loadCatalog() {
+    try {
+        // 1. Get the table model & clear it
+        DefaultTableModel model = (DefaultTableModel) tblCatalog.getModel();
+        model.setRowCount(0); 
 
+        // 2. Fetch data from Service
+        BookService bookService = new BookService("data/books.txt"); // Ensure filename matches
+        List<Book> books = bookService.getAllBooks(); //
+
+        // 3. Add rows to table
+        for (Book b : books) {
+            model.addRow(new Object[]{
+                b.getId(),
+                b.getTitle(),
+                b.getAuthor(),
+                b.getGenre(),
+                b.getStatus() // Shows AVAILABLE or BORROWED
+            });
+        }
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error loading catalog: " + ex.getMessage());
+    }
+   
+}
+private void loadProfileData() {
+    // 1. Fill the fields with current user data
+    // ID Field (jTextField2) - Read Only
+    IDPatron.setText(String.valueOf(currentUser.getId()));
+    
+    // Name Field (jTextField3)
+    PatornName.setText(currentUser.getName());
+    
+    // Email Field (jTextField4)
+    patornEmail.setText(currentUser.getEmail());
+    
+    // Password Field (jPasswordField1)
+    patornPass.setText(currentUser.getPassword());
+}
+private void loadMyBooks() {
+    try {
+        // 1. Clear the table
+        DefaultTableModel model = (DefaultTableModel) tblMyBooks.getModel();
+        model.setRowCount(0);
+
+        // 2. Prepare Services
+        // TransactionService needs BOTH filenames because it talks to both files
+        TransactionService tService = new TransactionService("data/transactions.txt", "data/books.txt");
+        BookService bService = new BookService("books.txt");
+
+        // 3. Get Data
+        List<Transaction> myTransactions = tService.getUserTransactions(currentUser.getId()); //
+        List<Book> allBooks = bService.getAllBooks(); //
+
+        // 4. Match Data and Fill Table
+        for (Transaction t : myTransactions) {
+            
+            // Find the Book details for this transaction
+            String bookTitle = "Unknown ID: " + t.getBookId();
+            String bookAuthor = "-";
+            
+            for (Book b : allBooks) {
+                if (b.getId() == t.getBookId()) {
+                    bookTitle = b.getTitle();
+                    bookAuthor = b.getAuthor();
+                    break;
+                }
+            }
+
+            // Add row to table
+            model.addRow(new Object[]{
+                t.getTransactionId(),
+                bookTitle,
+                bookAuthor,
+                t.getBorrowDate(),
+                t.getDueDate(),
+                t.getStatus() // Shows "BORROWED" or "RETURNED"
+            });
+        }
+
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Error loading my books: " + ex.getMessage());
+    }
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JTextField IDPatron;
+    private javax.swing.JTextField PatornName;
+    private javax.swing.JButton btnSearchPatron;
+    private javax.swing.JButton btnUpdateInfo;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -387,15 +672,15 @@ public class PatronDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblWelcome;
+    private javax.swing.JTextField patornEmail;
+    private javax.swing.JPasswordField patornPass;
+    private javax.swing.JButton patornRenew;
+    private javax.swing.JButton patornRequest;
     private javax.swing.JTable tblCatalog;
     private javax.swing.JTable tblMyBooks;
     // End of variables declaration//GEN-END:variables

@@ -1,5 +1,6 @@
 package com.mycompany.TextFiles;
 
+import com.mycompany.model.Reservation;
 import java.io.*;
 import java.util.*;
 

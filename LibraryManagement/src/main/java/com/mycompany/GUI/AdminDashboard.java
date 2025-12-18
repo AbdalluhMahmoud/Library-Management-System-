@@ -105,6 +105,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton4.setForeground(new java.awt.Color(0, 86, 179));
         jButton4.setText("Logout");
         jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -927,6 +932,12 @@ public class AdminDashboard extends javax.swing.JFrame {
          javax.swing.JOptionPane.showMessageDialog(this, "Error reading ID from table. Try refreshing the table first.");
     }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
